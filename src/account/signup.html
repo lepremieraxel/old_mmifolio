@@ -17,23 +17,94 @@
   </head>
   <body class="account">
     <header>
-      <a href="/"><h1 class="logo">mmi<span>folio</span></h1></a>
+      <a href="/"
+        ><h1 class="logo">mmi<span>folio</span></h1></a
+      >
     </header>
     <main>
       <h2>S'inscrire</h2>
       <form action="">
-        <div class="input-container">
-          <label for="login">Nom d'utilisateur ou adresse email*</label>
-          <input type="text" name="login" id="login" required placeholder="@nomdutilisateur ou prenom.nom@iut-tarbes.fr">
+        <div class="input-container input-line">
+          <label for="fullname">Nom & prénom*</label>
+          <input
+            type="text"
+            name="fullname"
+            id="fullname"
+            required
+            placeholder="Nom Prénom"
+          />
+        </div>
+        <div class="input-container input-line">
+          <label for="promo">Promo*</label>
+          <select name="promo" id="promo">
+            <option value="">Choisis ta promo</option>
+            <option value="2021-2024">2021 - 2024</option>
+            <option value="2022-2025">2022 - 2025</option>
+          </select>
+        </div>
+        <div class="input-container input-line">
+          <label for="username">Nom d'utilisateur*</label>
+          <div class="special-input">
+            <span>@</span>
+            <input
+              type="text"
+              name="username"
+              id="username"
+              required
+              placeholder="nomdutilisateur"
+            />
+          </div>
+          <small>De 1 à 30 caractères alphanumériques. (+ “.” et “_”)</small>
+        </div>
+        <div class="input-container input-line">
+          <label for="profile-picture">Photo de profil</label>
+          <div class="special-input">
+            <span><i class="ri-file-upload-line"></i></span>
+            <input type="file" name="profile-picture" id="profile-picture" />
+          </div>
+          <small>Taille recommandé : 256x256 pixels. Max.:500Mo.</small>
         </div>
         <div class="input-container">
+          <label for="email">Adresse email*</label>
+          <input
+            type="text"
+            name="email"
+            id="email"
+            required
+            placeholder="prenom.nom@iut-tarbes.fr"
+          />
+        </div>
+        <div class="input-container input-line">
           <label for="passwd">Mot de passe*</label>
-          <input type="password" name="passwd" id="passwd" required placeholder="•••••••••••••••">
+          <input
+            type="password"
+            name="passwd"
+            id="passwd"
+            required
+            placeholder="•••••••••••••••"
+          />
+          <small
+            >De 8 à 30 caractères. Minimum 1 minuscule, 1 majuscule, 1 chiffre
+            et 1 symbole.</small
+          >
+        </div>
+        <div class="input-container input-line">
+          <label for="passwdre">Confirmer*</label>
+          <input
+            type="password"
+            name="passwdre"
+            id="passwdre"
+            required
+            placeholder="•••••••••••••••"
+          />
         </div>
         <button class="form-btn">S'inscrire</button>
       </form>
       <div class="link-line">
-        <p>Tu as déjà un compte ? <a href="/" class="gradient-text">Se connecter</a></p>
+        <p>
+          Tu as déjà un compte ?
+          <a href="/" class="gradient-text">Se connecter</a>
+        </p>
       </div>
     </main>
   </body>
