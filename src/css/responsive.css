@@ -71,4 +71,22 @@
     flex-wrap: wrap;
     justify-content: center;
   }
+
+  .account header{
+    position: absolute;
+    background: none;
+    width: fit-content;
+  }
+  .account header a{
+    color: var(--black-text);
+  }
+  .account main{
+    width: 100%;
+  }
+  .account main form{
+    width: 80%;
+  }
+  .link-line{
+    width: 80%;
+  }
 }

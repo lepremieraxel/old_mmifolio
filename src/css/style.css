@@ -9,6 +9,7 @@
   --primary-gradient: #820544;
   --secondary-gradient: #144D87;
   --gradient: linear-gradient(90deg, var(--primary-gradient) 10%, var(--secondary-gradient) 85%);
+  --account-gradient: linear-gradient(-135deg, var(--primary-gradient) 10%, var(--secondary-gradient) 85%);
   --white-bg: #fff;
   --black-text: #000;
   --red-warning: #AE1B1B;
@@ -43,6 +44,10 @@ header{
   justify-content: space-between;
   padding: var(--padding-header);
   background: var(--white-bg);
+}
+header a{
+  text-decoration: none;
+  color: var(--black-text);
 }
 .logo{
   font-weight: var(--semibold-wgt);
@@ -179,11 +184,51 @@ header .burger{
   flex-direction: column;
   align-items: center;
   gap: 2em;
+  margin-bottom: 3em;
+}
+.galery-title{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--padding-article);
+  width: 100%;
+  font-size: 1em;
+}
+.galery-title form{
+  color: var(--white-bg);
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  background: var(--black-text);
+  padding: .5em 1.5em;
+  border-radius: 99px
+}
+.galery-title select{
+  background: none;
+  outline: none;
+  border: none;
+  color: var(--white-bg);
+  font-family: Urbanist, sans-serif;
+  font-size: 1em;
+  cursor: pointer;
+}
+.galery-title option{
+  background: var(--black-text);
+}
+.galery-title .order-submit{
+  background: none;
+  border: none;
+  color: var(--white-bg);
+  font-size: 1.2em;
+  cursor: pointer;
 }
 .galery-container h3{
   font-size: var(--article-title);
-  padding: var(--padding-article);
+}
+.galery-container .home{
   width: 100%;
+  padding: var(--padding-article);
 }
 .grid-galery{
   display: grid;
@@ -348,4 +393,118 @@ footer .nav-title{
 }
 .footer-line a{
   color: var(--black-text);
+}
+
+/* login form */
+body.account{
+  display: flex;
+  justify-content: end;
+  width: 100%;
+  height: 100vh;
+  position: relative;
+}
+.account header{
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: start;
+  background: var(--account-gradient);
+  padding: 2vh 4vw;
+  width: 30%;
+  height: 100vh;
+}
+.account header a{
+  color: var(--white-bg);
+}
+.account main{
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5em;
+}
+.account main h2{
+  font-size: 4em;
+}
+.account main form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2em;
+  width: 40%;
+}
+.input-container{
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: .5em;
+  width: 100%;
+}
+.input-container label{
+  font-size: 1.5em;
+  font-weight: var(--semibold-wgt);
+  margin-left: -.6em;
+  width: 100%;
+}
+.input-container input{
+  font-family: Urbanist, sans-serif;
+  font-size: 1.2em;
+  padding: .5em 1em;
+  width: 100%;
+  border: 2px solid black;
+  border-radius: 15px;
+}
+.form-btn{
+  font-size: 1.2em;
+  padding: .8em 1.6em;
+  background: var(--black-text);
+  color: var(--white-bg);
+  border: none;
+  border-radius: 15px;
+  width: fit-content;
+  cursor: pointer;
+  transition: transform .4s ease-out;
+}
+.form-btn:hover{
+  transform: translateY(-.1em);
+}
+.link-line{
+  width: 40%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.link-line a{
+  text-decoration: none;
+  color: var(--black-text);
+  position: relative;
+}
+.link-line a::before{
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 100%;
+  height: 1px;
+  background: var(--black-text);
+  transform-origin: right;
+  scale: 0 1;
+  transition: scale .4s ease-out;
+}
+.link-line a:hover::before{
+  scale: 1;
+  transform-origin: left;
+}
+.gradient-text{
+  font-weight: var(--semibold-wgt);
+  background: var(--gradient);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+}
+a.gradient-text::before{
+  background: var(--gradient);
 }
