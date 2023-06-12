@@ -16,20 +16,7 @@
     <title>accueil — mmifolio</title>
   </head>
   <body>
-    <header>
-      <button class="burger"><span></span><span></span><span></span></button>
-      <a href="/"><h1 class="logo">mmi<span>folio</span></h1></a>
-      <nav class="main-nav">
-        <a href="/" class="nav-item">Accueil</a>
-        <a href="/src/pages/decouvrir.html" class="nav-item">Découvrir</a>
-        <a href="/src/pages/categories.html" class="nav-item">Catégories</a>
-        <a href="/src/pages/archives.html" class="nav-item">Archives</a>
-        <a href="/" class="nav-item add-nav-item">Déposer une création</a>
-        <div class="separator"></div>
-        <button class="cta gradient-cta"><a href="/src/account/login.html">Se connecter <i class="ri-user-line"></i></a></button>
-        <!-- <a class="profil-btn" href="/"><img src="/assets/img_dev/profil.png" alt="profile picture"><p>Voir le profil</p></a> -->
-      </nav>
-    </header>
+    <?php include_once('src/includes/header.php')?>
     <main>
       <article id="hero">
         <div class="hero-text">
@@ -276,42 +263,6 @@
         <button class="cta"><a href="/">Découvrir <i class="ri-add-box-line"></i></a></button>
       </article>
     </main>
-    <footer>
-      <div class="footer-up-container">
-        <a href="/" class="logo"
-          ><p>mmi<span>folio</span></p></a
-        >
-        <div class="nav-container">
-          <nav>
-            <p class="nav-title">Explorer</p>
-            <a href="/">Accueil</a>
-            <a href="/">Découvrir</a>
-            <a href="/">Catégories</a>
-            <a href="/">Archives</a>
-            <a href="/">Déposer une création</a>
-          </nav>
-          <nav>
-            <p class="nav-title">À propos</p>
-            <a href="/">Se connecter</a>
-            <a href="/">S'inscrire</a>
-            <a href="/">Contact</a>
-            <a href="/">Rejoindre le projet</a>
-            <a href="/">Mentions légales</a>
-          </nav>
-          <nav>
-            <p class="nav-title">Liens utiles</p>
-            <a href="/">Emploi du temps</a>
-            <a href="/">Webmail IUT</a>
-            <a href="/">Moodle</a>
-            <a href="/">Festival MMI</a>
-            <a href="/">Site IUT</a>
-          </nav>
-        </div>
-      </div>
-      <p class="footer-line">
-        mmi<span>folio</span> • 2023 • par mmi, pour mmi • by
-        <a href="https://axelmarcial.com">lepremieraxel</a>
-      </p>
-    </footer>
+    <?php include_once('src/includes/footer.php');?>
   </body>
 </html>

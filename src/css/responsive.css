@@ -61,6 +61,9 @@
   .galery-container h3{
     text-align: center;
   }
+  .grid-item-overlay{
+    opacity: 1;
+  }
   .footer-up-container{
     flex-direction: column;
   }
@@ -83,10 +86,73 @@
   .account main{
     width: 100%;
   }
+  .account main > p{
+    max-width: 90%;
+  }
   .account main form{
     width: 80%;
   }
   .link-line{
     width: 80%;
+  }
+  .input-line{
+    flex-direction: column;
+  }
+  main#add .input-line>:nth-child(1){
+    width: 100%;
+  }
+  main#add .input-file .line{
+    flex-direction: column;
+    align-items: start;
+  }
+  main#add .input-file .input-container{
+    width: 100%;
+  }
+  main#add .input-file .input-file-preview{
+    max-width: 50%;
+  }
+  main#add .file-preview-grid{
+    grid-template-columns: repeat(2, 1fr);
+  }
+  main#page{
+    padding: 3vh 8vw;
+  }
+  main#page .description{
+    padding: 0 .5em;
+  }
+  main#page .galery>img{
+    display: none;
+  }
+  main#page .galery-selector{
+    grid-template-columns: repeat(1, 1fr);
+  }
+  main#page .galery-active{
+    border: 3px solid #fff;
+  }
+  main#page .galery-selector .galery-active:hover{
+    border: 3px solid #e4e4e4;
+  }
+  main#profil{
+    padding: 8vh 5vw;
+  }
+  main#profil .user-container{
+    flex-direction: column;
+  }
+  main#profil .user-avatar{
+    width: 100%;
+    max-width: 300px;
+  }
+  main#profil .user-line{
+    flex-direction: column;
+    gap: 2em;
+  }
+  main#profil .user-bio-text{
+    width: 100%;
+  }
+  main#profil .tab-bar{
+    justify-content: center;
+  }
+  main#profil .grid-profil{
+    justify-content: center;
   }
 }

@@ -13,27 +13,14 @@
       rel="stylesheet"
     />
     <!-- TITLE -->
-    <title>catégories — mmifolio</title>
+    <title>archives — mmifolio</title>
   </head>
   <body>
-    <header>
-      <button class="burger"><span></span><span></span><span></span></button>
-      <a href="/"><h1 class="logo">mmi<span>folio</span></h1></a>
-      <nav class="main-nav">
-        <a href="/" class="nav-item">Accueil</a>
-        <a href="/src/pages/decouvrir.html" class="nav-item">Découvrir</a>
-        <a href="/src/pages/categories.html" class="nav-item">Catégories</a>
-        <a href="/src/pages/archives.html" class="nav-item">Archives</a>
-        <a href="/" class="nav-item add-nav-item">Déposer une création</a>
-        <div class="separator"></div>
-        <button class="cta gradient-cta"><a href="/">Se connecter <i class="ri-user-line"></i></a></button>
-        <!-- <a class="profil-btn" href="/"><img src="/assets/img_dev/profil.png" alt="profile picture"><p>Voir le profil</p></a> -->
-      </nav>
-    </header>
+  <?php include_once('../includes/header.php')?>
     <main>
       <article class="galery-container" id="most-recents">
         <div class="galery-title">
-          <h3>Les illustrations</h3>
+          <h3>2021 - 2022</h3>
           <button class="cta"><a href="/">En voir plus <i class="ri-add-line"></i></a></button>
         </div>
         <div class="grid-galery">
@@ -265,7 +252,7 @@
       </article>
       <article class="galery-container" id="most-recents">
         <div class="galery-title">
-          <h3>Les sites web</h3>
+          <h3>2020 - 2021</h3>
           <button class="cta"><a href="/">En voir plus <i class="ri-add-line"></i></a></button>
         </div>
         <div class="grid-galery">

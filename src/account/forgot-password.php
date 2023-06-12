@@ -13,29 +13,26 @@
       rel="stylesheet"
     />
     <!-- TITLE -->
-    <title>connexion — mmifolio</title>
+    <title>mot de passe oublié — mmifolio</title>
   </head>
   <body class="account">
     <header>
       <a href="/"><h1 class="logo">mmi<span>folio</span></h1></a>
     </header>
     <main>
-      <h2>Se connecter</h2>
+      <h2>Mot de passe oublié</h2>
+      <p>Tu vas recevoir un mail avec un lien qui te renverra sur une page pour réinitialiser ton mot de passe et en définir un nouveau.</p>
       <form action="">
         <div class="input-container">
-          <label for="login">Nom d'utilisateur ou adresse email*</label>
-          <input type="text" name="login" id="login" required placeholder="@nomdutilisateur ou prenom.nom@iut-tarbes.fr">
+          <label for="forgot">Adresse email*</label>
+          <input type="email" name="forgot" id="forgot" required placeholder="prenom.nom@iut-tarbes.fr">
         </div>
-        <div class="input-container">
-          <label for="passwd">Mot de passe*</label>
-          <input type="password" name="passwd" id="passwd" required placeholder="•••••••••••••••">
+        <button class="form-btn">Recevoir</button>
+        <div class="link-line">
+          <p>Tu n'es pas encore membre ? <a href="/src/account/signup.php" class="gradient-text">S'inscrire</a></p>
+          <a href="/src/account/login.php   " class="gradient-text">Se connecter.</a>
         </div>
-        <button class="form-btn">Se connecter</button>
       </form>
-      <div class="link-line">
-        <p>Tu n'es pas encore membre ? <a href="/" class="gradient-text">S'inscrire</a></p>
-        <a href="/">Mot de passe oublié ?</a>
-      </div>
     </main>
   </body>
 </html>
