@@ -18,33 +18,7 @@
   <body>
   <?php include_once('../includes/header.php')?>
     <main id="page">
-      <a href="/" class="close-btn"><i class="ri-close-line"></i> Fermer</a>
-      <div class="user-infos">
-        <a href="/" class="user">
-          <img src="/assets/img_dev/profil.png" alt="photo de profil de user">
-          <p>• Axel Marcial • <span>@lepremieraxel</span></p>
-        </a>
-        <div class="like">
-          <p>356</p>
-          <button><i class="ri-heart-3-line"></i></button>
-        </div>
-      </div>
-      <div class="creation-infos">
-        <p>Titre de la création</p>
-        <p>Catégorie • Date</p>
-      </div>
-      <img src="/assets/img_dev/img3.jpg" alt="apercu" class="apercu">
-      <p class="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis ex quam perferendis. Adipisci labore harum cupiditate autem, nihil fuga error voluptatibus odio doloremque nisi cum blanditiis sapiente quis veniam reprehenderit? Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam, optio at magnam consequuntur tempora cumque recusandae a, temporibus quidem non debitis quo expedita, necessitatibus culpa! Tenetur ea expedita eaque quidem?</p>
-      <div class="galery">
-        <img src="/assets/img_dev/img1.png" alt="image de galerie 1">
-        <div class="galery-selector">
-          <img src="/assets/img_dev/img1.png" alt="image de galerie 1" class="galery-active">
-          <img src="/assets/img_dev/img2.png" alt="image de galerie 2">
-          <img src="/assets/img_dev/img4.png" alt="image de galerie 4">
-          <img src="/assets/img_dev/img4.png" alt="image de galerie 4">
-          <img src="/assets/img_dev/img4.png" alt="image de galerie 4">
-        </div>
-      </div>
+      <?php include('../php/displayPage.php'); displayPage();?>
     </main>
     <footer>
       <div class="footer-up-container">
@@ -83,5 +57,6 @@
         <a href="https://axelmarcial.com">lepremieraxel</a>
       </p>
     </footer>
+    <script src="/src/js/galerySelector.js"></script>
   </body>
 </html>

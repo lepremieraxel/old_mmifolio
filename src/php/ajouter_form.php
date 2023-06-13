@@ -7,13 +7,13 @@ if(isset($_POST['title']) && !empty($_POST['title']) && strlen($_POST['title']) 
   if(isset($_POST['category']) && !empty($_POST['category'])){
     if(isset($_POST['description']) && !empty($_POST['description']) && strlen($_POST['description']) <= 1000){
       if(isset($_POST['date']) && !empty($_POST['date'])){
-        if(isset($_FILES['apercu']) && $_FILES['apercu']['error'] == 0 && $_FILES['apercu']['size'] > 0 && $_FILES['apercu']['size'] <= 52428800){
+        if(isset($_FILES['apercu']) && $_FILES['apercu']['error'] == 0 && $_FILES['apercu']['size'] > 0 && $_FILES['apercu']['size'] <= 5000000){
           var_dump($_FILES['galery']);
-          if(isset($_FILES['galery']) && $_FILES['galery']['error'][0] == 0 && $_FILES['galery']['size'][0] > 0 && $_FILES['galery']['size'][0] <= 524288000 && sizeof($_FILES['galery']['name']) <= 5){
+          if(isset($_FILES['galery']) && $_FILES['galery']['error'][0] == 0 && $_FILES['galery']['size'][0] > 0 && $_FILES['galery']['size'][0] <= 5000000 && sizeof($_FILES['galery']['name']) <= 5){
 
 
             $title = htmlspecialchars($_POST['title']);
-            $category = htmlspecialchars($_POST['category']);
+            $category_flat = htmlspecialchars($_POST['category']);
             $description = htmlspecialchars($_POST['description']);
             $url = htmlspecialchars($_POST['url']);
             $date = htmlspecialchars($_POST['date']);
@@ -25,6 +25,11 @@ if(isset($_POST['title']) && !empty($_POST['title']) && strlen($_POST['title']) 
             $galery4_token = '';
             $galery5_token = '';
             $insert_err = [];
+
+            $select_cat = $db->prepare('SELECT * FROM categories WHERE flat_name = ?');
+            $select_cat->execute(array($category_flat));
+            $category_data = $select_cat->fetch();
+            $category = $category_data['name'];
             
             $apercu_file = $_FILES['apercu']['tmp_name'];
             $apercu = file_get_contents($apercu_file);
@@ -128,13 +133,26 @@ if(isset($_POST['title']) && !empty($_POST['title']) && strlen($_POST['title']) 
                 array_push($insert_err, false);
               }
             }
+            $select_date = $db->prepare('SELECT * FROM year WHERE name = ?');
+            $select_date->execute(array($date));
+            $count_date = $select_date->rowCount();
+            if($count_date < 1){
+              $insert_date = $db->prepare('INSERT INTO year (name) VALUES(:name)');
+              $insert_date->execute(array('name' => $date));
+              if($insert_date){
+                array_push($insert_err, true);
+              } else {
+                array_push($insert_err, false);
+              }
+            }
 
-            $insert = $db->prepare('INSERT INTO creations (token, token_user, title, category, description, date, link, apercu, galery1, galery2, galery3, galery4, galery5) VALUES(:token, :token_user, :title, :category, :description, :date, :link, :apercu, :galery1, :galery2, :galery3, :galery4, :galery5)');
+            $insert = $db->prepare('INSERT INTO creations (token, token_user, title, category, category_flat, description, date, link, apercu, galery1, galery2, galery3, galery4, galery5) VALUES(:token, :token_user, :title, :category, :category_flat, :description, :date, :link, :apercu, :galery1, :galery2, :galery3, :galery4, :galery5)');
             $insert->execute(array(
               'token' => $token,
               'token_user' => $_SESSION['user'],
               'title' => $title,
               'category' => $category,
+              'category_flat' => $category_flat,
               'description' => $description,
               'date' => $date,
               'link' => $url,

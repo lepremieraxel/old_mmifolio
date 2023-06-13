@@ -25,6 +25,7 @@ if(isset($_POST['fullname']) && !empty($_POST['fullname']) && $_POST['fullname']
                   $repasswd = htmlspecialchars($_POST['repasswd']);
 
                   $avatar = "";
+                  $avatar_type = "";
                   $cost = ['cost' => 12];
                   $token = bin2hex(openssl_random_pseudo_bytes(64));
                   

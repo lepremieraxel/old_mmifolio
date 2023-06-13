@@ -155,4 +155,17 @@
   main#profil .grid-profil{
     justify-content: center;
   }
+  main#setting form{
+    width: 90%;
+  }
+  main#setting .input-file{
+    flex-direction: column;
+  }
+  main#setting .input-file-container{
+    align-items: center;
+  }
+  main#setting .delete-data-container{
+    width: 90%;
+    flex-direction: column;
+  }
 }

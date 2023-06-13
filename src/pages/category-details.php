@@ -13,23 +13,16 @@
       rel="stylesheet"
     />
     <!-- TITLE -->
-    <title>découvrir — mmifolio</title>
+    <title><?php echo $_GET['cat'];?> — mmifolio</title>
   </head>
   <body>
   <?php include_once('../includes/header.php')?>
     <main>
-      <article class="galery-container" id="most-recents">
-        <div class="galery-title">
-          <h3>Découvrir</h3>
-        </div>
-        <div class="grid-galery">
-        <?php 
-          $_SESSION['last_page'] = $_SERVER['REQUEST_URI'];
-          include('../php/displayCreations.php');
-          displayDiscover();
-        ?>
-        </div>
-      </article>
+          <?php 
+            $_SESSION['last_page'] = $_SERVER['REQUEST_URI'];
+            include('../php/displayCreations.php');
+            displayCategoryDetails();
+          ?>
     </main>
     <?php include_once('../includes/footer.php');?>
   </body>

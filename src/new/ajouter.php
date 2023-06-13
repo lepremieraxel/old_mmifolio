@@ -47,7 +47,7 @@
               <option value="">Choisis une catégorie</option>
               <?php 
                 foreach($db->query('SELECT * FROM categories') as $category){
-                  echo '<option value="'.$category['name'].'">'.$category['name'].'</option>';
+                  echo '<option value="'.$category['flat_name'].'">'.$category['name'].'</option>';
                 }
               ?>
             </select>
@@ -63,8 +63,8 @@
             <input type="text" name="url" id="url" placeholder="https://lien-vers-le-projet.mmi">
           </div>
           <div class="input-container">
-            <label for="date">Et une date* :</label>
-            <input type="month" name="date" id="date" required>
+            <label for="date">Et une année* :</label>
+            <input type="number" name="date" id="date" required min="2000" max="2100" value="2023">
           </div>
         </div>
         <div class="input-file">
@@ -72,39 +72,34 @@
             <div class="input-container">
               <label for="apercu">Maintenant, il lui faut un aperçu* :</label>
               <div class="special-input">
-                <input type="file" name="apercu" id="apercu" required accept="image/png, image/jpeg">
+                <input type="file" name="apercu" id="apercu" required accept="image/png, image/jpeg, video/mp4, video/avi, video/mov, video/webm" onchange="apercuInput(this, 'apercu-preview', 'apercu-label');">
                 <span><i class="ri-file-upload-line"></i></span>
-                <label class="file-label" for="apercu">Choisis un fichier</label>
+                <label class="file-label" for="apercu" id="apercu-label">Choisis un fichier</label>
               </div>
+              <small>Tu peux choisir une image ou une courte vidéo.
+                Affiché en 4:3. Max.: 5Mo. Seulement .png, .jpg, .mp4, .avi, .mov et .webm.</small>
             </div>
-            <small>Tu peux choisir une image ou une courte vidéo.
-              Affiché en 4:3. Max.: 5Mo.</small>
           </div>
-          <div class="input-file-preview"><img src="/assets/img_dev/img3.jpg" alt="image d'aperçu sélectionnée"></div>
+          <div class="input-file-preview" id="apercu-preview"></div>
         </div>
         <div class="input-file">
-          <div class="line">
-            <div class="input-container">
-              <label for="galery">Et pour finir, il faudrait une belle galerie d'images et de courtes vidéos* :</label>
-              <div class="special-input">
-                <input type="file" name="galery[]" id="galery" required multiple accept="image/png,image/jpeg,video/mp4,video/avi,video/mov,video/webm">
-                <span><i class="ri-file-upload-line"></i></span>
-                <label for="galery" class="file-label">Choisis des fichiers</label>
-              </div>
+          <div class="input-container">
+            <label for="galery">Et pour finir, il faudrait une belle galerie d'images et de courtes vidéos* :</label>
+            <div class="special-input">
+              <input type="file" name="galery[]" id="galery" required multiple accept="image/png,image/jpeg,video/mp4,video/avi,video/mov,video/webm" onchange="galeryInput(this, 'galery-preview', 'galery-label')">
+              <span><i class="ri-file-upload-line"></i></span>
+              <label for="galery" class="file-label" id="galery-label">Choisis des fichiers</label>
             </div>
             <small>Tu peux choisir jusqu'à cinq images et courtes vidéos. Affiché en 4:3. Max.: 5Mo par fichier. Seulement .png, .jpg, .mp4, .avi, .mov et .webm.</small>
           </div>
-          <div class="file-preview-grid">
-            <img src="/assets/img_dev/img1.png" alt="image de galerie 1">
-            <img src="/assets/img_dev/img2.png" alt="image de galerie 2">
-            <img src="/assets/img_dev/img3.jpg" alt="image de galerie 3">
-            <img src="/assets/img_dev/img4.png" alt="image de galerie 4">
-            <video src="/assets/img_dev/Crosswire Launch Video animation web web design website.mp4" autoplay loop muted></video>
+          <div class="file-preview-grid" id="galery-preview">
           </div>
         </div>
         <button class="form-btn">Ajouter <i class="ri-send-plane-fill"></i></button>
       </form>
     </main>
     <?php include_once('../includes/footer.php');?>
+    <script src="/src/js/currentYear.js"></script>
+    <script src="/src/js/inputFilePreview.js"></script>
   </body>
 </html>
