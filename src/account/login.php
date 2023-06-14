@@ -1,7 +1,9 @@
 <?php 
   require_once('../config/config.php');
-  session_start();
-  if(isset($_SESSION)){
+  if(session_status() == 1){
+    session_start();
+  }
+  if(isset($_SESSION['connected']) && $_SESSION['connected'] = true){
     $check = $db->prepare('SELECT * FROM users WHERE token = ?');
     $check->execute(array($_SESSION['user']));
     $user_data = $check->fetch();

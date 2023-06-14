@@ -3,7 +3,7 @@
   if(session_status() == 1){
     session_start();
   }
-  if(isset($_SESSION)){
+  if(isset($_SESSION['connected']) && $_SESSION['connected'] = true){
     $check = $db->prepare('SELECT * FROM users WHERE token = ?');
     $check->execute(array($_SESSION['user']));
     $user_data = $check->fetch();
@@ -72,7 +72,7 @@
             <div class="input-container">
               <label for="apercu">Maintenant, il lui faut un aperçu* :</label>
               <div class="special-input">
-                <input type="file" name="apercu" id="apercu" required accept="image/png, image/jpeg, video/mp4, video/avi, video/mov, video/webm" onchange="apercuInput(this, 'apercu-preview', 'apercu-label');">
+                <input type="file" name="apercu" id="apercu" required accept="image/png, image/jpeg, video/mp4, video/avi, video/mov, video/webm" onchange="apercuInput(this, 'apercu-preview', 'apercu-label', 'apercu');">
                 <span><i class="ri-file-upload-line"></i></span>
                 <label class="file-label" for="apercu" id="apercu-label">Choisis un fichier</label>
               </div>

@@ -17,6 +17,7 @@ if(isset($_POST['login']) && !empty($_POST['login'])){
       if(password_verify($passwd, $data_user['password'])){
         session_start();
         $_SESSION['user'] = $data_user['token'];
+        $_SESSION['connected'] = true;
         header('Location:/'); die();
       } else header('Location:/src/account/login.php?e=passwd_incorrect'); die();
     } else header('Location:/src/account/login.php?e=login_inexist'); die();

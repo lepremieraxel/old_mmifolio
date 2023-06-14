@@ -40,7 +40,7 @@ function displayPage()
         <div class="tool-bar">
           <a href="'.$_SESSION['last_page'].'" class="close-btn"><i class="ri-close-line"></i> Fermer</a>';
         if($_SESSION['user'] == $user_data['token']){
-          echo '<a href="/" class="edit-btn"><i class="ri-edit-fill"></i>
+          echo '<a href="/src/new/modifier.php?user='.$user_data['username'].'&token_user='.$_SESSION['user'].'&title='.$creation_data['title'].'&token_creation='.$creation_data['token'].'" class="edit-btn"><i class="ri-edit-fill"></i>
           </a>';
         }
         echo '</div>
@@ -76,8 +76,8 @@ function displayPage()
               echo '<div id="mainGaleryContainer">'.$galery1.'</div>';
             }
             if($galery1_type == "video"){
-              $galery1 = '<video class="apercu" src="data:'.$apercu_data['type'].';base64,'.base64_encode($galery1_data['data']).'" autoplay loop muted></video>';
-              $galery1_selector = '<video class="galery-active" src="data:'.$apercu_data['type'].';base64,'.base64_encode($galery1_data['data']).'" autoplay loop muted onclick="changeImg(this);"></video>';
+              $galery1 = '<video class="apercu" src="data:'.$galery1_data['type'].';base64,'.base64_encode($galery1_data['data']).'" autoplay loop muted></video>';
+              $galery1_selector = '<video class="galery-active" src="data:'.$galery1_data['type'].';base64,'.base64_encode($galery1_data['data']).'" autoplay loop muted onclick="changeImg(this);"></video>';
               echo '<div id="mainGaleryContainer">'.$galery1.'</div>';
             }
           } else {
@@ -101,7 +101,7 @@ function displayPage()
                 ' . $galery2;
               }
               if($galery2_type == "video"){
-                $galery2 = '<video src="data:'.$apercu_data['type'].';base64,'.base64_encode($galery2_data['data']).'" autoplay loop muted onclick="changeImg(this);"></video>';
+                $galery2 = '<video src="data:'.$galery2_data['type'].';base64,'.base64_encode($galery2_data['data']).'" autoplay loop muted onclick="changeImg(this);"></video>';
                 echo '<div class="galery-selector">
                 ' . $galery1_selector . '
                 ' . $galery2;
@@ -119,9 +119,20 @@ function displayPage()
             $select_galery3->execute(array($creation_data['galery3']));
             $galery3_data = $select_galery3->fetch();
             $galery3_count = $select_galery3->rowCount();
-            if ($galery3_count > 0) {
-              $galery3 = 'data:' . $galery3_data['type'] . ';base64,' . base64_encode($galery3_data['data']);
-              echo '<img src="' . $galery3 . '" alt="image de galerie 3" onclick="changeImg(this);">';
+            if($galery3_count > 0){
+              $galery3_type = explode('/', $galery3_data['type']);
+              $galery3_type = $galery3_type[0];
+              if($galery3_type == "image"){
+                $galery3 = '<img src="data:'.$galery3_data['type'].';base64,'.base64_encode($galery3_data['data']).'" alt="img de galerie 3" onclick="changeImg(this);"/>';
+                echo $galery3;
+              }
+              if($galery3_type == "video"){
+                $galery3 = '<video src="data:'.$galery3_data['type'].';base64,'.base64_encode($galery3_data['data']).'" autoplay loop muted onclick="changeImg(this);"></video>';
+                echo $galery3;
+              }
+            } else {
+              $galery3 = '<img src="/assets/img/default_img.png" alt="img de galerie 3" onclick="changeImg(this);"/>';
+              echo $galery3;
             }
           }
 
@@ -130,9 +141,20 @@ function displayPage()
             $select_galery4->execute(array($creation_data['galery4']));
             $galery4_data = $select_galery4->fetch();
             $galery4_count = $select_galery4->rowCount();
-            if ($galery4_count > 0) {
-              $galery4 = 'data:' . $galery4_data['type'] . ';base64,' . base64_encode($galery4_data['data']);
-              echo '<img src="' . $galery4 . '" alt="image de galerie 4" onclick="changeImg(this);">';
+            if($galery4_count > 0){
+              $galery4_type = explode('/', $galery4_data['type']);
+              $galery4_type = $galery4_type[0];
+              if($galery4_type == "image"){
+                $galery4 = '<img src="data:'.$galery4_data['type'].';base64,'.base64_encode($galery4_data['data']).'" alt="img de galerie 4" onclick="changeImg(this);"/>';
+                echo $galery4;
+              }
+              if($galery4_type == "video"){
+                $galery4 = '<video src="data:'.$galery4_data['type'].';base64,'.base64_encode($galery4_data['data']).'" autoplay loop muted onclick="changeImg(this);"></video>';
+                echo $galery4;
+              }
+            } else {
+              $galery4 = '<img src="/assets/img/default_img.png" alt="img de galerie 4" onclick="changeImg(this);"/>';
+              echo $galery4;
             }
           }
 
@@ -141,9 +163,20 @@ function displayPage()
             $select_galery5->execute(array($creation_data['galery5']));
             $galery5_data = $select_galery5->fetch();
             $galery5_count = $select_galery5->rowCount();
-            if ($galery5_count > 0) {
-              $galery5 = 'data:' . $galery5_data['type'] . ';base64,' . base64_encode($galery5_data['data']);
-              echo '<img src="' . $galery5 . '" alt="image de galerie 5" onclick="changeImg(this);">';
+            if($galery5_count > 0){
+              $galery5_type = explode('/', $galery5_data['type']);
+              $galery5_type = $galery5_type[0];
+              if($galery5_type == "image"){
+                $galery5 = '<img src="data:'.$galery5_data['type'].';base64,'.base64_encode($galery5_data['data']).'" alt="img de galerie 5" onclick="changeImg(this);"/>';
+                echo $galery5;
+              }
+              if($galery5_type == "video"){
+                $galery5 = '<video src="data:'.$galery5_data['type'].';base64,'.base64_encode($galery5_data['data']).'" autoplay loop muted onclick="changeImg(this);"></video>';
+                echo $galery5;
+              }
+            } else {
+              $galery5 = '<img src="/assets/img/default_img.png" alt="img de galerie 5" onclick="changeImg(this);"/>';
+              echo $galery5;
             }
           }
         }

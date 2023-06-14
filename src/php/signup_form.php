@@ -42,7 +42,7 @@ if(isset($_POST['fullname']) && !empty($_POST['fullname']) && $_POST['fullname']
                     header('Location:/src/account/signup.php?e=username_exist'); die();
                   }
                   
-                  if(isset($_FILES['profile-picture']) && $_FILES['profile-picture']['error'] == 0 && $_FILES['profile-picture']['size'] > 0 && $_FILES['profile-picture']['size'] <= 52428800){
+                  if(isset($_FILES['profile-picture']) && $_FILES['profile-picture']['error'] == 0 && $_FILES['profile-picture']['size'] > 0 && $_FILES['profile-picture']['size'] <= 5000000){
                     $file = $_FILES['profile-picture']['tmp_name'];
                     $avatar = file_get_contents($file);
                     $avatar_type = mime_content_type($file);
@@ -62,6 +62,7 @@ if(isset($_POST['fullname']) && !empty($_POST['fullname']) && $_POST['fullname']
                   if($insert){
                     session_start();
                     $_SESSION['user'] = $token;
+                    $_SESSION['connected'] = true;
                     header('Location:/'); die();
                   } else header('Location:/src/account/signup.php?e=server_err'); die();
 

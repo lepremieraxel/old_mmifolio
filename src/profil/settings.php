@@ -1,3 +1,21 @@
+<?php 
+  require_once('../config/config.php');
+  if(session_status() == 1){
+    session_start();
+  }
+  if(isset($_SESSION['connected']) && $_SESSION['connected'] = true){
+    $check = $db->prepare('SELECT * FROM users WHERE token = ?');
+    $check->execute(array($_SESSION['user']));
+    $user_data = $check->fetch();
+    $count = $check->rowCount();
+    if($count <= 0){
+      header('Location:/src/account/login.php'); die();
+    }
+    if($_SESSION['user'] !== $_GET['token']){
+      header('Location:'.$_SESSION['last_page'].''); die();
+    }
+  }
+?>
 <!DOCTYPE html>
 <html lang="fr">
   <head>
@@ -52,11 +70,15 @@
             <label for="email">Adresse email*</label>
             <input type="email" name="email" id="email" required value="<?php echo $user_data['email'];?>">
           </div>
+          <?php echo '<input type="hidden" name="general_user_token" value="'.$_SESSION['user'].'">';?>
           <button class="cta gradient-cta" name="general-form"><a>Sauvegarder&nbsp;<i class="ri-save-3-line"></i></a></button>
         </form>
       </div>
       <div class="setting-container" id="setting-profil" style="display: none;">
-        <form method="post" id="delete-profil-photo"></form>
+        <form action="/src/php/settings_form.php" method="post" id="delete-profil-photo">
+        <?php echo '<input type="hidden" name="delete_photo_user_token" value="'.$_SESSION['user'].'">
+        <input type="hidden" name="delete_photo_redirect" value="user='.$_GET['user'].'&token='.$_SESSION['user'].'">';?>
+        </form>
         <form action="/src/php/settings_form.php" method="post" enctype="multipart/form-data">
           <div class="input-file">
             <img src="<?php echo $avatar;?>" alt="photo de profil" id="current-avatar">
@@ -67,11 +89,11 @@
                   <label for="photo">Changer&nbsp;<i class="ri-pencil-fill"></i></label>
                 </div>
                 <div class="input-file-btn delete-btn">
-                  <input type="submit" name="delete-photo" id="delete-photo" value="" form="delete-profil-photo">
+                  <input type="submit" name="delete-photo" id="delete-photo" form="delete-profil-photo">
                   <label for="delete-photo">Supprimer&nbsp;<i class="ri-delete-bin-line"></i></label>
                 </div>
               </div>
-              <small>Taille recommandé: 256x256 pixels. Max.: 3Mo. Seulement .png et .jpg.<br>Le bouton supprimer permet de supprimer la photo de profil actuelle.</small>
+              <small>Taille recommandé: 256x256 pixels. Max.: 3Mo. Seulement .png et .jpg.<br>N'oublies pas de sauvegarder quand tu changes ta photo de profil.<br>Le bouton supprimer permet de supprimer la photo de profil actuelle.</small>
             </div>
           </div>
           <div class="input-container">
@@ -120,6 +142,7 @@
               <input type="text" name="behance" id="behance" placeholder="nomdutilisateur" value="<?php echo $user_data['behance'];?>">
             </div>
           </div>
+          <?php echo '<input type="hidden" name="profil_redirect" value="user='.$_GET['user'].'&token='.$_SESSION['user'].'"><input type="hidden" name="profil_user_token" value="'.$_SESSION['user'].'">';?>
           <button class="cta gradient-cta" name="profil-form"><a>Sauvegarder&nbsp;<i class="ri-save-3-line"></i></a></button>
         </form>
       </div>
@@ -147,35 +170,86 @@
               <input type="password" name="renewpasswd" id="renewpasswd" required placeholder="•••••••••••••••">
             </div>
           </div>
+          <?php echo'<input type="hidden" name="password_user_token" value="'.$_SESSION['user'].'">
+          <input type="hidden" name="password_redirect" value="user='.$_GET['user'].'&token='.$_SESSION['user'].'">';?>
           <button class="cta gradient-cta" name="password-form"><a>Sauvegarder&nbsp;<i class="ri-save-3-line"></i></a></button>
         </form>
       </div>
       <div class="setting-container" id="setting-data" style="display: none;">
+      <div class="setting-data-modal" data-modal="creations" style="display: none;">
+        <div class="modal-inner">
+          <p class="title">Es-tu sûr de vouloir supprimer toutes tes créations ?</p>
+          <div class="separator"></div>
+          <p>Si tu acceptes, toutes les créations que tu as posté sur ce site seront supprimées définitivement.<br><br><span>Cette action est irréversible.</span></p>
+          <div class="separator"></div>
+          <div class="btn-line">
+            <button class="cta" onclick="closeModal(this);"><a>Annuler&nbsp;<i class="ri-close-line"></i></a></button>
+            <form action="/src/php/settings_form.php" method="post" class="modal-form">
+              <input type="hidden" name="data_creations">
+              <?php echo '<input type="hidden" name="data_creations_redirect" value="user='.$_GET['user'].'&token='.$_SESSION['user'].'"><input type="hidden" name="data_creations_user_token" value="'.$_SESSION['user'].'">';?>
+              <button class="delete-btn">Supprimer&nbsp;<i class="ri-delete-bin-line"></i></button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="setting-data-modal" data-modal="likes" style="display: none;">
+        <div class="modal-inner">
+          <p class="title">Es-tu sûr de vouloir supprimer tous tes likes ?</p>
+          <div class="separator"></div>
+          <p>Si tu acceptes, tous les likes que tu as laissé sur ce site seront supprimées définitivement.<br><br><span>Cette action est irréversible.</span></p>
+          <div class="separator"></div>
+          <div class="btn-line">
+            <button class="cta" onclick="closeModal(this);"><a>Annuler&nbsp;<i class="ri-close-line"></i></a></button>
+            <form action="/src/php/settings_form.php" method="post" class="modal-form">
+              <input type="hidden" name="data_likes">
+              <?php echo '<input type="hidden" name="data_likes_redirect" value="user='.$_GET['user'].'&token='.$_SESSION['user'].'"><input type="hidden" name="data_likes_user_token" value="'.$_SESSION['user'].'">';?>
+              <button class="delete-btn">Supprimer&nbsp;<i class="ri-delete-bin-line"></i></button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="setting-data-modal" data-modal="account" style="display: none;">
+        <div class="modal-inner">
+          <p class="title">Es-tu sûr de vouloir supprimer ton compte ?</p>
+          <div class="separator"></div>
+          <p>Si tu acceptes, ton compte ainsi que tous tes likes et toutes tes créations seront supprimés définitivement.<br><br><span>Cette action est irréversible.</span></p>
+          <div class="separator"></div>
+          <div class="btn-line">
+            <button class="cta" onclick="closeModal(this);"><a>Annuler&nbsp;<i class="ri-close-line"></i></a></button>
+            <form action="/src/php/settings_form.php" method="post" class="modal-form">
+              <input type="hidden" name="data_account">
+              <?php echo '<input type="hidden" name="data_account_redirect" value="user='.$_GET['user'].'&token='.$_SESSION['user'].'"><input type="hidden" name="data_account_user_token" value="'.$_SESSION['user'].'">';?>
+              <button class="delete-btn">Supprimer&nbsp;<i class="ri-delete-bin-line"></i></button>
+            </form>
+          </div>
+        </div>
+      </div>
         <div class="delete-data-container">
           <div class="delete-data-text">
             <p class="title">Supprimer toutes les créations</p>
             <p>A pour effet de supprimer toutes les créations que tu as posté. <span>Cette action est irréversible.</span></p>
           </div>
-          <button class="delete-data-cta">Supprimer&nbsp;<i class="ri-delete-bin-line"></i></button>
+          <button class="delete-data-cta" onclick="openModal('creations');">Supprimer&nbsp;<i class="ri-delete-bin-line"></i></button>
         </div>
         <div class="delete-data-container">
           <div class="delete-data-text">
             <p class="title">Supprimer tous les likes</p>
             <p>A pour effet de supprimer tous les likes que tu as laissé derrière toi. <span>Cette action est irréversible.</span></p>
           </div>
-          <button class="delete-data-cta">Supprimer&nbsp;<i class="ri-delete-bin-line"></i></button>
+          <button class="delete-data-cta" onclick="openModal('likes');">Supprimer&nbsp;<i class="ri-delete-bin-line"></i></button>
         </div>
         <div class="delete-data-container">
           <div class="delete-data-text">
             <p class="title">Supprimer le compte</p>
             <p>A pour effet de supprimer ton compte ainsi que toutes tes créations et tes likes. <span>Cette action est irréversible.</span></p>
           </div>
-          <button class="delete-data-cta">Supprimer&nbsp;<i class="ri-delete-bin-line"></i></button>
+          <button class="delete-data-cta" onclick="openModal('account');">Supprimer&nbsp;<i class="ri-delete-bin-line"></i></button>
         </div>
       </div>
     </main>
     <?php include_once('../includes/footer.php');?>
     <script src="/src/js/settingsTabBar.js"></script>
     <script src="/src/js/inputFilePreview.js"></script>
+    <script src="/src/js/openModalDelete.js"></script>
   </body>
 </html>

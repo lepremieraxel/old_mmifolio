@@ -13,8 +13,9 @@
       require_once('/Users/axelm/Desktop/mmifolio/src/config/config.php');
       if(session_status() == 1){
         session_start();
+        $_SESSION['connected'] = false;
       }
-      if(isset($_SESSION)){
+      if(isset($_SESSION['connected']) && $_SESSION['connected'] = true){
         $check = $db->prepare('SELECT * FROM users WHERE token = ?');
         $check->execute(array($_SESSION['user']));
         $user_data = $check->fetch();

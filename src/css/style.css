@@ -626,14 +626,14 @@ main#add .file-preview-grid img, main#add .file-preview-grid video{
   object-fit: cover;
   border-radius: 10px;
 }
-main#page{
+main#page, main#update form{
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 2em;
   padding: 3vh 20vw;
 }
-main#page>:nth-child(n){
+main#page>:nth-child(n), main#update form>:nth-child(n){
   width: 100%;
 }
 main#page .tool-bar{
@@ -642,12 +642,12 @@ main#page .tool-bar{
   align-items: center;
   justify-content: space-between;
 }
-main#page .close-btn{
+main#page .close-btn, main#update .close-btn{
   text-decoration: none;
   color: var(--black-text);
   font-size: 1.3em;
 }
-main#page .close-btn:hover{
+main#page .close-btn:hover, main#update .close-btn:hover{
   color: var(--red-warning);
 }
 main#page .edit-btn{
@@ -658,12 +658,12 @@ main#page .edit-btn{
 main#page .edit-btn:hover{
   color: var(--secondary-gradient);
 }
-main#page .user-infos{
+main#page .user-infos, main#update .user-infos{
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-main#page .user{
+main#page .user, main#update .user{
   display: flex;
   align-items: center;
   gap: 1em;
@@ -671,13 +671,13 @@ main#page .user{
   color: var(--black-text);
   font-size: 1.3em;
 }
-main#page .user img{
+main#page .user img, main#update .user img{
   width: 4em;
   aspect-ratio: 1;
   object-fit: cover;
   border-radius: 99px;
 }
-main#page .user p:hover{
+main#page .user p:hover, main#update .user p:hover{
   opacity: .8;
 }
 main#page .like{
@@ -918,7 +918,7 @@ main#setting .setting-container{
   align-items: center;
   gap: 3em;
 }
-main#setting form{
+main#setting form:not(.modal-form){
   width: 40%;
   display: flex;
   flex-direction: column;
@@ -995,7 +995,7 @@ main#setting .delete-data-text .title{
 main#setting .delete-data-text span{
   font-weight: var(--bold-wgt);
 }
-main#setting .delete-data-cta{
+.delete-data-cta{
   border: 2px solid var(--red-warning);
   border-radius: 999px;
   padding: .7em 1.4em;
@@ -1003,5 +1003,125 @@ main#setting .delete-data-cta{
   font-size: 1em;
   font-weight: var(--semibold-wgt);
   color: var(--red-warning);
+  transition: transform .4s ease;
   cursor: pointer;
+}
+.delete-data-cta:hover{
+  transform: translateY(-2px);
+}
+.setting-data-modal{
+  z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.setting-data-modal .modal-inner{
+  background-color: var(--white-bg);
+  padding: 3em 4em;
+  border-radius: 20px;
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2em;
+  box-shadow: 0 0 2em #00000092;
+}
+.setting-data-modal .separator{
+  width: 80% !important;
+}
+.setting-data-modal .title{
+  font-size: 2em;
+  font-weight: var(--semibold-wgt);
+  text-align: center;
+}
+.setting-data-modal p:not(.title) span{
+  font-weight: var(--bold-wgt);
+}
+.setting-data-modal .btn-line{
+  display: flex;
+  justify-content: end;
+  flex-wrap: wrap;
+  width: 100%;
+  gap: 1.5em;
+}
+.setting-data-modal .modal-form{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.setting-data-modal form .delete-btn{
+  background: none;
+  border: 2px solid var(--red-warning);
+  color: var(--red-warning);
+  border-radius: 999px;
+  padding: .7em 1.4em;
+  font-size: 1em;
+  font-weight: var(--semibold-wgt);
+  cursor: pointer;
+  transition: transform .4s ease;
+}
+.setting-data-modal form .delete-btn:hover{
+  transform: translateY(-2px);
+}
+main#update{
+  width: 100%;
+}
+main#update .apercu-preview{
+  border-radius: 20px;
+  overflow: hidden;
+  aspect-ratio: 4/3;
+}
+main#update .apercu-preview img, main#update .apercu-preview video{
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  width: 100%;
+}
+main#update .input-line .input-container:first-child{
+  width: 130%;
+}
+main#update .input-line .input-container:nth-child(2){
+  width: 100%;
+}
+main#update .input-line .input-container:last-child{
+  width: 30%;
+}
+main#update .input-file{
+  display: flex;
+  align-items: center;
+  gap: 2em;
+  width: 60% !important;
+  align-self: flex-start;
+}
+main#update .input-file-line{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1em;
+}
+main#update .input-file-line .input-file{
+  align-self: center;
+}
+main#update .input-file-line .galery-preview{
+  min-width: 30%;
+  width: 30%;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+  border-radius: 15px;
+}
+main#update .input-file-line .galery-preview img, main#update .input-file-line .galery-preview video{
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+}
+main#update .btn-line{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2em;
 }

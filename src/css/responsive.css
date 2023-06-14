@@ -156,7 +156,7 @@
     justify-content: center;
   }
   main#setting form{
-    width: 90%;
+    width: 90% !important;
   }
   main#setting .input-file{
     flex-direction: column;
@@ -167,5 +167,11 @@
   main#setting .delete-data-container{
     width: 90%;
     flex-direction: column;
+  }
+  .setting-data-modal .modal-inner{
+    width: 90%;
+  }
+  .setting-data-modal .btn-line{
+    justify-content: center;
   }
 }

@@ -10,7 +10,7 @@ function avatarInput(el, id){
   }
 }
 
-function apercuInput(el, div, label){
+function apercuInput(el, div, label, input){
   const previewDiv = document.querySelector(`#${div}`);
   while(previewDiv.firstChild) {
     previewDiv.removeChild(previewDiv.firstChild);
@@ -18,6 +18,7 @@ function apercuInput(el, div, label){
   const labelEl = document.querySelector(`#${label}`);
   const [file] = el.files;
   if(file){
+    console.log(labelEl, previewDiv);
     if(file.size <= 5000000){
       const reader = new FileReader();
       const filetype = file.type;
@@ -47,7 +48,7 @@ function apercuInput(el, div, label){
       }
     } else{
       alert('Vous ne pouvez pas upload des fichiers supérieur à 5Mo.');
-      document.querySelector('#apercu').value='';
+      document.querySelector(`#${input}`).value='';
       labelEl.innerText = 'Choisis un fichier';
     }
   }

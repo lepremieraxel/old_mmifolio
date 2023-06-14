@@ -128,7 +128,7 @@ function displayArchives($nb)
           </div>
           <div class="grid-item-overlay overlay-infos">
           <div class="overlay-line">
-          <a href="/src/pages/page.php?title=' . $line['title'] . '&token_creation=' . $line['token'] . '&page=' . $_SERVER['REQUEST_URI'] . '" title="' . $line['title'] . ' • ' . $line['category'] . '">' . $line['title'] . ' • ' . $line['category'] . '</a>
+          <a href="/src/pages/page.php?title=' . $line['title'] . '&token_creation=' . $line['token'] . '">' . $line['title'] . ' • ' . $line['category'] . '</a>
           <div class="overlay-like">
           <p>356</p>
           <button>
@@ -202,7 +202,7 @@ function displayCategoryDetails()
               </div>
               <div class="grid-item-overlay overlay-infos">
               <div class="overlay-line">
-              <a href="/src/pages/page.php?title=' . $line['title'] . '&token_creation=' . $line['token'] . '&page=' . $_SERVER['REQUEST_URI'] . '" title="' . $line['title'] . ' • ' . $line['category'] . '">' . $line['title'] . ' • ' . $line['category'] . '</a>
+              <a href="/src/pages/page.php?title=' . $line['title'] . '&token_creation=' . $line['token'] . '">' . $line['title'] . ' • ' . $line['category'] . '</a>
               <div class="overlay-like">
               <p>356</p>
               <button>
@@ -280,7 +280,7 @@ function displayCategory($nb)
             </div>
             <div class="grid-item-overlay overlay-infos">
             <div class="overlay-line">
-            <a href="/src/pages/page.php?title=' . $line['title'] . '&token_creation=' . $line['token'] . '&page=' . $_SERVER['REQUEST_URI'] . '" title="' . $line['title'] . ' • ' . $line['category'] . '">' . $line['title'] . ' • ' . $line['category'] . '</a>
+            <a href="/src/pages/page.php?title=' . $line['title'] . '&token_creation=' . $line['token'] . '">' . $line['title'] . ' • ' . $line['category'] . '</a>
             <div class="overlay-like">
             <p>356</p>
             <button>
@@ -341,7 +341,7 @@ function displayDiscover()
     </div>
     <div class="grid-item-overlay overlay-infos">
       <div class="overlay-line">
-        <a href="/src/pages/page.php?title=' . $line['title'] . '&token_creation=' . $line['token'] . '&page=' . $_SERVER['REQUEST_URI'] . '" title="' . $line['title'] . ' • ' . $line['category'] . '">' . $line['title'] . ' • ' . $line['category'] . '</a>
+        <a href="/src/pages/page.php?title=' . $line['title'] . '&token_creation=' . $line['token'] . '">' . $line['title'] . ' • ' . $line['category'] . '</a>
         <div class="overlay-like">
           <p>356</p>
           <button>
@@ -398,7 +398,7 @@ function displayHome($nb)
     </div>
     <div class="grid-item-overlay overlay-infos">
       <div class="overlay-line">
-        <a href="/src/pages/page.php?title=' . $line['title'] . '&token_creation=' . $line['token'] . '&page=' . $_SERVER['REQUEST_URI'] . '" title="' . $line['title'] . ' • ' . $line['category'] . '">' . $line['title'] . ' • ' . $line['category'] . '</a>
+        <a href="/src/pages/page.php?title=' . $line['title'] . '&token_creation=' . $line['token'] . '">' . $line['title'] . ' • ' . $line['category'] . '</a>
         <div class="overlay-like">
           <p>356</p>
           <button>

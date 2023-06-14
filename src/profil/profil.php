@@ -89,12 +89,12 @@
         echo '<div class="grid-item">
             ' . $apercu . '
             <div class="grid-item-overlay overlay-user">
-              <a href="/src/pages/page.php?title=' . $line_creation['title'] . '&token_creation=' . $line_creation['token'] . '&page=' . $_SERVER['REQUEST_URI'] . '">
+              <a href="/src/pages/page.php?title=' . $line_creation['title'] . '&token_creation=' . $line_creation['token'] . '">
                 <img src="' . $avatar . '" alt="profile picture de ' . $user_data['fullname'] . '" />
                 <p>• ' . $user_data['fullname'] . '</p>
               </a>';
         if ($_SESSION['user'] == $_GET['token']) {
-          echo '<a href="/" class="edit-btn"><i class="ri-edit-fill"></i></a>';
+          echo '<a href="/src/new/modifier.php?user='.$user_data['username'].'&token_user='.$_SESSION['user'].'&title='.$line_creation['title'].'&token_creation='.$line_creation['token'].'" class="edit-btn"><i class="ri-edit-fill"></i></a>';
         } else echo '';
         echo '</div>
             <div class="grid-item-overlay overlay-infos">

@@ -19,6 +19,7 @@ if(isset($_POST['title']) && !empty($_POST['title']) && strlen($_POST['title']) 
             $date = htmlspecialchars($_POST['date']);
             $galery = $_FILES['galery'];
             $token = bin2hex(openssl_random_pseudo_bytes(64));
+            $apercu_token = '';
             $galery1_token = '';
             $galery2_token = '';
             $galery3_token = '';
@@ -31,13 +32,34 @@ if(isset($_POST['title']) && !empty($_POST['title']) && strlen($_POST['title']) 
             $category_data = $select_cat->fetch();
             $category = $category_data['name'];
             
+            $insert = $db->prepare('INSERT INTO creations (token, token_user, title, category, category_flat, description, date, link, apercu, galery1, galery2, galery3, galery4, galery5) VALUES(:token, :token_user, :title, :category, :category_flat, :description, :date, :link, :apercu, :galery1, :galery2, :galery3, :galery4, :galery5)');
+            $insert->execute(array(
+              'token' => $token,
+              'token_user' => $_SESSION['user'],
+              'title' => $title,
+              'category' => $category,
+              'category_flat' => $category_flat,
+              'description' => $description,
+              'date' => $date,
+              'link' => $url,
+              'apercu' => $apercu_token,
+              'galery1' => $galery1_token,
+              'galery2' => $galery2_token,
+              'galery3' => $galery3_token,
+              'galery4' => $galery4_token,
+              'galery5' => $galery5_token
+            ));
+            
             $apercu_file = $_FILES['apercu']['tmp_name'];
             $apercu = file_get_contents($apercu_file);
             $apercu_type = mime_content_type($apercu_file);
             $apercu_token = bin2hex(openssl_random_pseudo_bytes(64));
-            $insert_media = $db->prepare('INSERT INTO medias (token, data, type) VALUES(:token, :data, :type)');
+            $update_creation = $db->prepare('UPDATE creations SET apercu = ? WHERE token = ?');
+            $update_creation->execute(array($apercu_token, $token));
+            $insert_media = $db->prepare('INSERT INTO medias (token, token_creation, data, type) VALUES(:token, :token_creation, :data, :type)');
               $insert_media->execute(array(
                 'token' => $apercu_token,
+                'token_creation' => $token,
                 'data' => $apercu,
                 'type' => $apercu_type
               ));
@@ -53,9 +75,12 @@ if(isset($_POST['title']) && !empty($_POST['title']) && strlen($_POST['title']) 
               $galery1 = file_get_contents($galery1_file);
               $galery1_type = mime_content_type($galery1_file);
               $galery1_token = bin2hex(openssl_random_pseudo_bytes(64));
-              $insert_media = $db->prepare('INSERT INTO medias (token, data, type) VALUES(:token, :data, :type)');
+              $update_creation = $db->prepare('UPDATE creations SET galery1 = ? WHERE token = ?');
+              $update_creation->execute(array($galery1_token, $token));
+              $insert_media = $db->prepare('INSERT INTO medias (token, token_creation, data, type) VALUES(:token, :token_creation, :data, :type)');
               $insert_media->execute(array(
                 'token' => $galery1_token,
+                'token_creation' => $token,
                 'data' => $galery1,
                 'type' => $galery1_type
               ));
@@ -70,9 +95,12 @@ if(isset($_POST['title']) && !empty($_POST['title']) && strlen($_POST['title']) 
               $galery2 = file_get_contents($galery2_file);
               $galery2_type = mime_content_type($galery2_file);
               $galery2_token = bin2hex(openssl_random_pseudo_bytes(64));
-              $insert_media = $db->prepare('INSERT INTO medias (token, data, type) VALUES(:token, :data, :type)');
+              $update_creation = $db->prepare('UPDATE creations SET galery2 = ? WHERE token = ?');
+              $update_creation->execute(array($galery2_token, $token));
+              $insert_media = $db->prepare('INSERT INTO medias (token, token_creation, data, type) VALUES(:token, :token_creation, :data, :type)');
               $insert_media->execute(array(
                 'token' => $galery2_token,
+                'token_creation' => $token,
                 'data' => $galery2,
                 'type' => $galery2_type
               ));
@@ -87,9 +115,12 @@ if(isset($_POST['title']) && !empty($_POST['title']) && strlen($_POST['title']) 
               $galery3 = file_get_contents($galery3_file);
               $galery3_type = mime_content_type($galery3_file);
               $galery3_token = bin2hex(openssl_random_pseudo_bytes(64));
-              $insert_media = $db->prepare('INSERT INTO medias (token, data, type) VALUES(:token, :data, :type)');
+              $update_creation = $db->prepare('UPDATE creations SET galery3 = ? WHERE token = ?');
+              $update_creation->execute(array($galery3_token, $token));
+              $insert_media = $db->prepare('INSERT INTO medias (token, token_creation, data, type) VALUES(:token, :token_creation, :data, :type)');
               $insert_media->execute(array(
                 'token' => $galery3_token,
+                'token_creation' => $token,
                 'data' => $galery3,
                 'type' => $galery3_type
               ));
@@ -104,9 +135,12 @@ if(isset($_POST['title']) && !empty($_POST['title']) && strlen($_POST['title']) 
               $galery4 = file_get_contents($galery4_file);
               $galery4_type = mime_content_type($galery4_file);
               $galery4_token = bin2hex(openssl_random_pseudo_bytes(64));
-              $insert_media = $db->prepare('INSERT INTO medias (token, data, type) VALUES(:token, :data, :type)');
+              $update_creation = $db->prepare('UPDATE creations SET galery4 = ? WHERE token = ?');
+              $update_creation->execute(array($galery4_token, $token));
+              $insert_media = $db->prepare('INSERT INTO medias (token, token_creation, data, type) VALUES(:token, :token_creation, :data, :type)');
               $insert_media->execute(array(
                 'token' => $galery4_token,
+                'token_creation' => $token,
                 'data' => $galery4,
                 'type' => $galery4_type
               ));
@@ -121,9 +155,12 @@ if(isset($_POST['title']) && !empty($_POST['title']) && strlen($_POST['title']) 
               $galery5 = file_get_contents($galery5_file);
               $galery5_type = mime_content_type($galery5_file);
               $galery5_token = bin2hex(openssl_random_pseudo_bytes(64));
-              $insert_media = $db->prepare('INSERT INTO medias (token, data, type) VALUES(:token, :data, :type)');
+              $update_creation = $db->prepare('UPDATE creations SET galery5 = ? WHERE token = ?');
+              $update_creation->execute(array($galery5_token, $token));
+              $insert_media = $db->prepare('INSERT INTO medias (token, token_creation, data, type) VALUES(:token, :token_creation, :data, :type)');
               $insert_media->execute(array(
                 'token' => $galery5_token,
+                'token_creation' => $token,
                 'data' => $galery5,
                 'type' => $galery5_type
               ));
@@ -146,26 +183,9 @@ if(isset($_POST['title']) && !empty($_POST['title']) && strlen($_POST['title']) 
               }
             }
 
-            $insert = $db->prepare('INSERT INTO creations (token, token_user, title, category, category_flat, description, date, link, apercu, galery1, galery2, galery3, galery4, galery5) VALUES(:token, :token_user, :title, :category, :category_flat, :description, :date, :link, :apercu, :galery1, :galery2, :galery3, :galery4, :galery5)');
-            $insert->execute(array(
-              'token' => $token,
-              'token_user' => $_SESSION['user'],
-              'title' => $title,
-              'category' => $category,
-              'category_flat' => $category_flat,
-              'description' => $description,
-              'date' => $date,
-              'link' => $url,
-              'apercu' => $apercu_token,
-              'galery1' => $galery1_token,
-              'galery2' => $galery2_token,
-              'galery3' => $galery3_token,
-              'galery4' => $galery4_token,
-              'galery5' => $galery5_token
-            ));
 
             if($insert && !in_array(false, $insert_err)){
-              header('Location:/src/pages/page.php?title='.$title.'&token='.$token.''); die();
+              header('Location:/src/pages/page.php?title='.$title.'&token_creation='.$token.'&page='.$_SESSION['last_page'].''); die();
             } else header('Location:/src/new/ajouter.php?e=server_err'); die();
 
           } else header('Location:/src/new/ajouter.php?e=galery'); die();

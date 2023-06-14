@@ -16,7 +16,9 @@
     <title>accueil — mmifolio</title>
   </head>
   <body>
-    <?php include_once('src/includes/header.php')?>
+    <?php 
+    include_once('src/includes/header.php');
+    ?>
     <main>
       <article id="hero">
         <div class="hero-text">
@@ -29,7 +31,7 @@
           </p>
         </div>
         <button class="cta hero-add-btn">
-          <a href="/">Ajoute tes créations <i class="ri-add-box-line"></i></a>
+          <a href="/src/new/ajouter.php">Ajoute tes créations <i class="ri-add-box-line"></i></a>
         </button>
       </article>
       <article class="galery-container" id="most-recents">
