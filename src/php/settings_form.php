@@ -20,12 +20,12 @@ if(isset($_POST['general-form'])){
           $update_general = $db->prepare('UPDATE users SET email = ?, username = ? WHERE token = ?');
           $update_general->execute(array($email, $username, $general_token));
           if($update_general){
-            header('Location:/src/profil/profil.php?user='.$username.'&token='.$general_token.'&e=general'); die();
-          } else header('Location:/src/profil/settings.php?user='.$username.'&token='.$general_token.'&e=server_err'); die();
-        } else header('Location:/src/profil/settings.php?user='.$username.'&token='.$general_token.'&e=email_invalid'); die();
-      } else header('Location:/src/profil/settings.php?user='.$username.'&token='.$general_token.'&e=username_invalid'); die();
-    } else header('Location:/src/profil/settings.php?user='.$username.'&token='.$general_token.'&e=email'); die();
-  } else header('Location:/src/profil/settings.php?user='.$username.'&token='.$general_token.'&e=username'); die();
+            header('Location:/profil/'.$username.'-'.$general_token.'&e=general'); die();
+          } else header('Location:/settings/'.$username.'-'.$general_token.'&e=server_err'); die();
+        } else header('Location:/settings/'.$username.'-'.$general_token.'&e=email_invalid'); die();
+      } else header('Location:/settings/'.$username.'-'.$general_token.'&e=username_invalid'); die();
+    } else header('Location:/settings/'.$username.'-'.$general_token.'&e=email'); die();
+  } else header('Location:/settings/'.$username.'-'.$general_token.'&e=username'); die();
 }
 
 if(isset($_POST['profil-form'])){
@@ -64,9 +64,9 @@ if(isset($_POST['profil-form'])){
     $update_profil = $db->prepare('UPDATE users SET fullname = ?, bio = ?, avatar = ?, avatar_type = ?, website = ?, portfolio = ?, instagram = ?, github = ?, dribbble = ?, behance = ? WHERE token = ?');
     $update_profil->execute(array($fullname, $bio, $avatar, $avatar_type, $website, $portfolio, $instagram, $github, $dribbble, $behance, $profil_token));
     if($update_profil){
-      header('Location:/src/profil/profil.php?'.$profil_redirect.'&e=profil'); die();
-    } else header('Location:/src/profil/settings.php?'.$profil_redirect.'&e=server_err'); die();
-  } else header('Location:/src/profil/settings.php?'.$profil_redirect.''); die();
+      header('Location:/profil/'.$profil_redirect.'&e=profil'); die();
+    } else header('Location:/settings/'.$profil_redirect.'&e=server_err'); die();
+  } else header('Location:/settings/'.$profil_redirect.'&e=fullname'); die();
 }
 
 if(isset($_POST['delete-photo'])){
@@ -79,8 +79,8 @@ if(isset($_POST['delete-photo'])){
   $update_delete_photo->execute(array($avatar, $avatar_type, $delete_photo_token));
 
   if($update_delete_photo){
-    header('Location:/src/profil/profil.php?'.$delete_photo_redirect.'&e=delete_photo'); die();
-  } else header('Location:/src/profil/settings.php?'.$delete_photo_redirect.'&e=server_err'); die();
+    header('Location:/profil/'.$delete_photo_redirect.'&e=delete_photo'); die();
+  } else header('Location:/settings/'.$delete_photo_redirect.'&e=server_err'); die();
 }
 
 if(isset($_POST['password-form'])){
@@ -108,14 +108,14 @@ if(isset($_POST['password-form'])){
               $update_password->execute(array($newpasswd, $password_token));
 
               if($update_password){
-                header('Location:/src/profil/profil.php?'.$password_redirect.'&e=passwd'); die();
-              } else header('Location:/src/profil/settings.php?'.$password_redirect.'&e=server_err'); die();
-            } else header('Location:/src/profil/settings.php?'.$password_redirect.'&e=oldpasswd_invalid'); die();
-          } else header('Location:/src/profil/settings.php?'.$password_redirect.'&e=newpasswd_invalid'); die();
-        } else header('Location:/src/profil/settings.php?'.$password_redirect.'&e=passwd_diff'); die();
-      } else header('Location:/src/profil/settings.php?'.$password_redirect.'&e=renewpasswd'); die();
-    } else header('Location:/src/profil/settings.php?'.$password_redirect.'&e=newpasswd'); die();
-  } else header('Location:/src/profil/settings.php?'.$password_redirect.'&e=oldpasswd'); die();
+                header('Location:/profil/'.$password_redirect.'&e=passwd'); die();
+              } else header('Location:/settings/'.$password_redirect.'&e=server_err'); die();
+            } else header('Location:/settings/'.$password_redirect.'&e=oldpasswd_invalid'); die();
+          } else header('Location:/settings/'.$password_redirect.'&e=newpasswd_invalid'); die();
+        } else header('Location:/settings/'.$password_redirect.'&e=passwd_diff'); die();
+      } else header('Location:/settings/'.$password_redirect.'&e=renewpasswd'); die();
+    } else header('Location:/settings/'.$password_redirect.'&e=newpasswd'); die();
+  } else header('Location:/settings/'.$password_redirect.'&e=oldpasswd'); die();
 }
 
 if(isset($_POST['data_creations'])){
@@ -125,8 +125,8 @@ if(isset($_POST['data_creations'])){
   $delete_creations = $db->prepare('DELETE FROM creations WHERE token_user = ?');
   $delete_creations->execute(array($data_creations_token));
   if($delete_creations){
-    header('Location:/src/profil/profil.php?'.$data_creations_redirect.'&e=delete_creations'); die();
-  } else header('Location:/src/profil/settings.php?'.$data_creations_redirect.'&e=server_err'); die();
+    header('Location:/profil/'.$data_creations_redirect.'&e=delete_creations'); die();
+  } else header('Location:/settings/'.$data_creations_redirect.'&e=server_err'); die();
 }
 
 if(isset($_POST['data_likes'])){
@@ -136,8 +136,8 @@ if(isset($_POST['data_likes'])){
   $delete_likes = $db->prepare('DELETE FROM likes WHERE token_user = ?');
   $delete_likes->execute(array($data_likes_token));
   if($delete_likes){
-    header('Location:/src/profil/profil.php?'.$data_likes_redirect.'&e=delete_likes'); die();
-  } else header('Location:/src/profil/settings.php?'.$data_likes_redirect.'&e=server_err'); die();
+    header('Location:/profil/'.$data_likes_redirect.'&e=delete_likes'); die();
+  } else header('Location:/settings/'.$data_likes_redirect.'&e=server_err'); die();
 }
 
 if(isset($_POST['data_account'])){
@@ -149,5 +149,5 @@ if(isset($_POST['data_account'])){
   if($delete_account){
     $_SESSION['user'] = '';
     header('Location:/'); die();
-  } else header('Location:/src/profil/settings.php?'.$data_account_redirect.'&e=server_err'); die();
+  } else header('Location:/settings/'.$data_account_redirect.'&e=server_err'); die();
 }

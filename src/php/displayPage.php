@@ -20,6 +20,44 @@ function displayPage()
           $avatar = 'data:' . $user_data['avatar_type'] . ';base64,' . base64_encode($user_data['avatar']);
         } else $avatar = '/assets/img/avatar.png';
 
+        
+        $like_select = $db->prepare('SELECT COUNT(*) FROM likes WHERE token_creation = ?');
+        $like_select->execute(array($creation_data['token']));
+        $nbLikes = $like_select->fetchColumn();
+
+        $isLiked_select = $db->prepare('SELECT * FROM likes WHERE token_user = ? AND token_creation = ?');
+        $isLiked_select->execute(array($_SESSION['user'], $creation_data['token']));
+        $isLiked_data = $isLiked_select->rowCount();
+    
+        if($nbLikes > 0){
+          if($isLiked_data > 0){
+            $likeBtn = '<button class="liked">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path
+                d="M16.5 3C19.5376 3 22 5.5 22 9C22 16 14.5 20 12 21.5C9.5 20 2 16 2 9C2 5.5 4.5 3 7.5 3C9.35997 3 11 4 12 5C13 4 14.64 3 16.5 3Z"
+              ></path>
+            </svg>
+          </button>';
+          } else {
+            $likeBtn = '<button>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path
+                d="M16.5 3C19.5376 3 22 5.5 22 9C22 16 14.5 20 12 21.5C9.5 20 2 16 2 9C2 5.5 4.5 3 7.5 3C9.35997 3 11 4 12 5C13 4 14.64 3 16.5 3Z"
+              ></path>
+            </svg>
+          </button>';
+          }
+        } else {
+          $likeBtn = '<button>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path
+              d="M16.5 3C19.5376 3 22 5.5 22 9C22 16 14.5 20 12 21.5C9.5 20 2 16 2 9C2 5.5 4.5 3 7.5 3C9.35997 3 11 4 12 5C13 4 14.64 3 16.5 3Z"
+            ></path>
+          </svg>
+        </button>';
+        }
+
+
         $apercu_select = $db->prepare('SELECT * FROM medias WHERE token = ?');
         $apercu_select->execute(array($creation_data['apercu']));
         $apercu_data = $apercu_select->fetch();
@@ -31,7 +69,7 @@ function displayPage()
             $apercu = '<img class="apercu" src="data:'.$apercu_data['type'].';base64,'.base64_encode($apercu_data['data']).'" alt="img apercu"/>';
           }
           if($apercu_type == "video"){
-            $apercu = '<video class="apercu" src="data:'.$apercu_data['type'].';base64,'.base64_encode($apercu_data['data']).'" autoplay loop muted></video>';
+            $apercu = '<video class="apercu" src="data:'.$apercu_data['type'].';base64,'.base64_encode($apercu_data['data']).'" autoplay loop muted webkit-playsinline playsinline></video>';
           }
         } else $apercu = '<img class="apercu" src="/assets/img/default_img.png" alt="img apercu"/>';
 
@@ -40,21 +78,31 @@ function displayPage()
         <div class="tool-bar">
           <a href="'.$_SESSION['last_page'].'" class="close-btn"><i class="ri-close-line"></i> Fermer</a>';
         if($_SESSION['user'] == $user_data['token']){
-          echo '<a href="/src/new/modifier.php?user='.$user_data['username'].'&token_user='.$_SESSION['user'].'&title='.$creation_data['title'].'&token_creation='.$creation_data['token'].'" class="edit-btn"><i class="ri-edit-fill"></i>
+          echo '<a href="/update/'.$creation_data['title'].'-'.$creation_data['token'].'-'.$user_data['token'].'" class="edit-btn"><i class="ri-edit-fill"></i>
           </a>';
         }
-        echo '</div>
-        <div class="user-infos">
-        <a href="/src/profil/profil.php?user=' . $user_data['username'] . '&token=' . $user_data['token'] . '" class="user">
+        echo '</div>';
+        echo '<div class="user-infos">
+        <a href="/profil/' . $user_data['username'] . '-' . $user_data['token'] . '" class="user">
         <img src="' . $avatar . '" alt="photo de profil de ' . $user_data['fullname'] . '">
-        <p>• ' . $user_data['fullname'] . ' • <span>@' . $user_data['username'] . '</span></p>
+        <p>•&nbsp;' . $user_data['fullname'] . ' •&nbsp;<span>@' . $user_data['username'] . '</span></p>
         </a>
         <div class="like">
-        <p>356</p>
-        <button><i class="ri-heart-3-line"></i></button>
+        <form class="like-form" name="like">
+          <input type="hidden" value="'.$_SESSION['user'].'" name="token_user"/>
+          <input type="hidden" value="'.$creation_data['token'].'" name="token_creation"/>
+          <p class="nbLikes">'.$nbLikes.'</p>
+          '.$likeBtn.'
+          </form>
         </div>
-        </div>
-        <div class="creation-infos">
+        </div>';
+
+        if($creation_data['link'] !== null){
+          $link = $creation_data['link'];
+          echo '<a target="_blank" class="project-link" href="'.$link.'">Lien vers le projet&nbsp;<i class="ri-external-link-line"></i></a>';
+        }
+
+        echo '<div class="creation-infos">
         <p>' . $creation_data['title'] . '</p>
         <p>' . $creation_data['category'] . ' • ' . $creation_data['date'] . '</p>
         </div>
@@ -76,8 +124,8 @@ function displayPage()
               echo '<div id="mainGaleryContainer">'.$galery1.'</div>';
             }
             if($galery1_type == "video"){
-              $galery1 = '<video class="apercu" src="data:'.$galery1_data['type'].';base64,'.base64_encode($galery1_data['data']).'" autoplay loop muted></video>';
-              $galery1_selector = '<video class="galery-active" src="data:'.$galery1_data['type'].';base64,'.base64_encode($galery1_data['data']).'" autoplay loop muted onclick="changeImg(this);"></video>';
+              $galery1 = '<video class="apercu" src="data:'.$galery1_data['type'].';base64,'.base64_encode($galery1_data['data']).'" autoplay loop muted webkit-playsinline playsinline></video>';
+              $galery1_selector = '<video class="galery-active" src="data:'.$galery1_data['type'].';base64,'.base64_encode($galery1_data['data']).'" autoplay loop muted webkit-playsinline playsinline onclick="changeImg(this);"></video>';
               echo '<div id="mainGaleryContainer">'.$galery1.'</div>';
             }
           } else {
@@ -101,7 +149,7 @@ function displayPage()
                 ' . $galery2;
               }
               if($galery2_type == "video"){
-                $galery2 = '<video src="data:'.$galery2_data['type'].';base64,'.base64_encode($galery2_data['data']).'" autoplay loop muted onclick="changeImg(this);"></video>';
+                $galery2 = '<video src="data:'.$galery2_data['type'].';base64,'.base64_encode($galery2_data['data']).'" autoplay loop muted webkit-playsinline playsinline onclick="changeImg(this);"></video>';
                 echo '<div class="galery-selector">
                 ' . $galery1_selector . '
                 ' . $galery2;
@@ -127,7 +175,7 @@ function displayPage()
                 echo $galery3;
               }
               if($galery3_type == "video"){
-                $galery3 = '<video src="data:'.$galery3_data['type'].';base64,'.base64_encode($galery3_data['data']).'" autoplay loop muted onclick="changeImg(this);"></video>';
+                $galery3 = '<video src="data:'.$galery3_data['type'].';base64,'.base64_encode($galery3_data['data']).'" autoplay loop muted webkit-playsinline playsinline onclick="changeImg(this);"></video>';
                 echo $galery3;
               }
             } else {
@@ -149,7 +197,7 @@ function displayPage()
                 echo $galery4;
               }
               if($galery4_type == "video"){
-                $galery4 = '<video src="data:'.$galery4_data['type'].';base64,'.base64_encode($galery4_data['data']).'" autoplay loop muted onclick="changeImg(this);"></video>';
+                $galery4 = '<video src="data:'.$galery4_data['type'].';base64,'.base64_encode($galery4_data['data']).'" autoplay loop muted webkit-playsinline playsinline onclick="changeImg(this);"></video>';
                 echo $galery4;
               }
             } else {
@@ -171,7 +219,7 @@ function displayPage()
                 echo $galery5;
               }
               if($galery5_type == "video"){
-                $galery5 = '<video src="data:'.$galery5_data['type'].';base64,'.base64_encode($galery5_data['data']).'" autoplay loop muted onclick="changeImg(this);"></video>';
+                $galery5 = '<video src="data:'.$galery5_data['type'].';base64,'.base64_encode($galery5_data['data']).'" autoplay loop muted webkit-playsinline playsinline onclick="changeImg(this);"></video>';
                 echo $galery5;
               }
             } else {
@@ -183,6 +231,6 @@ function displayPage()
         echo '</div>
       </div>';
       }
-    }
+    } else header('Location:/');
   }
 }

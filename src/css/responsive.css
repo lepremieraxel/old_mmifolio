@@ -1,6 +1,10 @@
 @media screen and (max-width: 1200px) {
   header .logo{
-    z-index: 10;
+    z-index: 1000;
+  }
+  .stop-scroll{
+    height: 100vh;
+    overflow: hidden;
   }
   .main-nav{
     background: var(--white-bg);
@@ -9,16 +13,20 @@
     top: 0;
     left: 0;
     width: 100vw;
-    height: 100vh; 
+    min-height: 100vh; 
+    height: 100vh;
     flex-direction: column;
     align-items: start;
     justify-content: space-between;
-    padding: 15vh 8vw 10vh;
+    padding: 10vh 8vw 10vh;
     transform: translateX(-100%);
     transition: transform .4s ease-out;
   }
   .main-nav .nav-item{
-    font-size: 3em;
+    font-size: 2em;
+  }
+  .main-nav.active{
+    transform: translateX(0);
   }
   header .separator{
     display: block;
@@ -49,6 +57,17 @@
     height: 5px;
     background: var(--black-text);
     border-radius: 99px;
+    transform-origin: center center;
+    transition: transform .4s ease;
+  }
+  header .burger.active span:first-child{
+    transform: rotate(45deg) translateY(18px);
+  }
+  header .burger.active span:nth-child(2){
+    transform: translateX(100px);
+  }
+  header .burger.active span:last-child{
+    transform: rotate(-45deg) translateY(-18px);
   }
   .profil-btn p{
     display: block;
@@ -89,11 +108,16 @@
   .account main > p{
     max-width: 90%;
   }
-  .account main form{
-    width: 80%;
+  .account main form, main#add form{
+    width: 80% !important;
   }
   .link-line{
-    width: 80%;
+    flex-wrap: wrap;
+    gap: 1em;
+    width: 110%;
+  }
+  .grid-galery{
+    justify-content: center;
   }
   .input-line{
     flex-direction: column;
@@ -108,19 +132,22 @@
   main#add .input-file .input-container{
     width: 100%;
   }
+  main#add .input-file .input-container small{
+    max-width: 100%;
+  }
   main#add .input-file .input-file-preview{
     max-width: 50%;
   }
   main#add .file-preview-grid{
     grid-template-columns: repeat(2, 1fr);
   }
-  main#page{
+  main#page, main#update form{
     padding: 3vh 8vw;
   }
   main#page .description{
     padding: 0 .5em;
   }
-  main#page .galery>img{
+  main#page .galery #mainGaleryContainer{
     display: none;
   }
   main#page .galery-selector{
@@ -129,8 +156,15 @@
   main#page .galery-active{
     border: 3px solid #fff;
   }
-  main#page .galery-selector .galery-active:hover{
-    border: 3px solid #e4e4e4;
+  main#page .galery-selector img:nth-child(n):not(.galery-active):hover, main#page .galery-selector video:nth-child(n):not(.galery-active){
+    cursor: default;
+  }
+  main#page .galery-selector img:nth-child(n):not(.galery-active):hover, main#page .galery-selector video:nth-child(n):not(.galery-active):hover{
+    border: 3px solid #fff;
+  }
+  main#page .user-infos, main#update .user-infos{
+    flex-wrap: wrap;
+    gap: 1em;
   }
   main#profil{
     padding: 8vh 5vw;
@@ -138,7 +172,11 @@
   main#profil .user-container{
     flex-direction: column;
   }
+  main#profil .user-name{
+    text-align: center;
+  }
   main#profil .user-avatar{
+    align-self: center;
     width: 100%;
     max-width: 300px;
   }
@@ -153,6 +191,9 @@
     justify-content: center;
   }
   main#profil .grid-profil{
+    justify-content: center;
+  }
+  main#profil .user-social{
     justify-content: center;
   }
   main#setting form{
@@ -173,5 +214,33 @@
   }
   .setting-data-modal .btn-line{
     justify-content: center;
+  }
+  main#update .input-line .input-container:first-child{
+    width: 100%;
+  }
+  main#update .input-line .input-container:nth-child(2){
+    width: 100%;
+  }
+  main#update .input-line .input-container:last-child{
+    width: 100%;
+  }
+  main#update .input-file{
+    flex-direction: column;
+    width: 100% !important;
+  }
+  main#update .input-file-line{
+    flex-direction: column;
+  }
+  main#update .input-file-line .galery-preview{
+    width: 100%;
+  }
+  main#update .galery-container{
+    gap: 2em;
+  }
+  main#update .btn-line{
+    flex-wrap: wrap;
+  }
+  main#contact form{
+    padding: 3vh 5vw;
   }
 }

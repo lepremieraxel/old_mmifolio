@@ -1,4 +1,8 @@
 <footer>
+  <div class="gototop">
+  <i class="ri-arrow-up-line"></i>
+  <p>Retour en haut</p>
+  </div>
   <div class="footer-up-container">
     <a href="/" class="logo"
       ><p>mmi<span>folio</span></p></a
@@ -7,18 +11,17 @@
       <nav>
         <p class="nav-title">Explorer</p>
         <a href="/">Accueil</a>
-        <a href="/src/pages/decouvrir.php">Découvrir</a>
-        <a href="/src/pages/categories.php">Catégories</a>
-        <a href="/src/pages/archives.php">Archives</a>
-        <a href="/src/new/ajouter.php">Déposer une création</a>
+        <a href="/pages/decouvrir">Découvrir</a>
+        <a href="/pages/categories">Catégories</a>
+        <a href="/pages/archives">Archives</a>
+        <a href="/add/">Déposer une création</a>
       </nav>
       <nav>
         <p class="nav-title">À propos</p>
-        <a href="/src/account/login.php">Se connecter</a>
-        <a href="/src/account/signup.php">S'inscrire</a>
-        <a href="/src/pages/contact.php?r=contact">Contact</a>
-        <a href="/src/pages/contact.php?r=join">Rejoindre le projet</a>
-        <a href="/src/pages/mentions-legales.php">Mentions légales</a>
+        <a href="/account/login">Se connecter</a>
+        <a href="/account/signup">S'inscrire</a>
+        <a href="/contact/contact">Contact</a>
+        <a href="/contact/join">Rejoindre le projet</a>
       </nav>
       <nav>
         <p class="nav-title">Liens utiles</p>
@@ -35,3 +38,7 @@
     <a href="https://axelmarcial.com">lepremieraxel</a>
   </p>
 </footer>
+<script src="/src/js/burgerMenu.js"></script>
+<script src="/src/js/likeAdding.js"></script>
+<script src="/src/js/autoGrowTextarea.js"></script>
+<script src="/src/js/goToTop.js"></script>

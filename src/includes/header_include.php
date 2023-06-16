@@ -2,12 +2,11 @@
   <button class="burger"><span></span><span></span><span></span></button>
   <a href="/"><h1 class="logo">mmi<span>folio</span></h1></a>
   <nav class="main-nav">
-    <a class="nav-item" href="/src/config/unlog.php">Se déconnecter</a>
     <a href="/" class="nav-item">Accueil</a>
-    <a href="/src/pages/decouvrir.php" class="nav-item">Découvrir</a>
-    <a href="/src/pages/categories.php" class="nav-item">Catégories</a>
-    <a href="/src/pages/archives.php" class="nav-item">Archives</a>
-    <a href="/src/new/ajouter.php" class="nav-item add-nav-item">Déposer une création</a>
+    <a href="/pages/decouvrir" class="nav-item">Découvrir</a>
+    <a href="/pages/categories" class="nav-item">Catégories</a>
+    <a href="/pages/archives" class="nav-item">Archives</a>
+    <a href="/add/" class="nav-item add-nav-item add-btn">Déposer une création</a>
     <div class="separator"></div>
     <?php 
       require_once('/Users/axelm/Desktop/mmifolio/src/config/config.php');
@@ -26,9 +25,9 @@
           } else {
             $avatar = 'data:'.$user_data['avatar_type'].';base64,'.base64_encode($user_data['avatar']);
           }
-          echo '<a class="profil-btn" href="/src/profil/profil.php?user='.$user_data['username'].'&token='.$user_data['token'].'"><img src="'.$avatar.'" alt="profile picture"><p>Voir le profil</p></a>';
+          echo '<a class="profil-btn" href="/profil/'.$user_data['username'].'-'.$user_data['token'].'"><img src="'.$avatar.'" alt="profile picture"><p>Voir le profil</p></a>';
         } else {
-          echo '<button class="cta gradient-cta"><a href="/src/account/login.php">Se connecter <i class="ri-user-line"></i></a></button>';
+          echo '<button class="cta gradient-cta"><a href="/account/login">Se&nbsp;connecter&nbsp;<i class="ri-user-line"></i></a></button>';
         }
       }
       ?>

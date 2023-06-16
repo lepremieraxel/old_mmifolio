@@ -46,72 +46,84 @@
               echo '<div class="form-alert form-error">
                 <i class="ri-error-warning-line"></i>
                 <p>Une erreur est survenue. Si le problème persiste, veuillez contacter un <a href="mailto:hello@axelmarcial.com">administrateur</a>.</p>
+                <button onclick="this.parentElement.remove()"><i class="ri-close-line"></i></button>
               </div>';
               break;
             case 'fullname':
               echo '<div class="form-alert form-error">
                 <i class="ri-error-warning-line"></i>
                 <p>Veuillez indiquer vos nom et prénom.</p>
+                <button onclick="this.parentElement.remove()"><i class="ri-close-line"></i></button>
               </div>';
               break;
             case 'promo':
               echo '<div class="form-alert form-error">
                 <i class="ri-error-warning-line"></i>
                 <p>Veuillez sélectionner une promo.</p>
+                <button onclick="this.parentElement.remove()"><i class="ri-close-line"></i></button>
               </div>';
               break;
             case 'username':
               echo '<div class="form-alert form-error">
                 <i class="ri-error-warning-line"></i>
                 <p>Veuillez indiquer un nom d\'utilisateur.</p>
+                <button onclick="this.parentElement.remove()"><i class="ri-close-line"></i></button>
               </div>';
               break;
             case 'email':
               echo '<div class="form-alert form-error">
                 <i class="ri-error-warning-line"></i>
                 <p>Veuillez indiquer une adresse email.</p>
+                <button onclick="this.parentElement.remove()"><i class="ri-close-line"></i></button>
               </div>';
               break;
             case 'password':
               echo '<div class="form-alert form-error">
                 <i class="ri-error-warning-line"></i>
                 <p>Veuillez remplir les deux champs de mot de passe.</p>
+                <button onclick="this.parentElement.remove()"><i class="ri-close-line"></i></button>
               </div>';
               break;
             case 'password_diff':
               echo '<div class="form-alert form-error">
                 <i class="ri-error-warning-line"></i>
                 <p>Les mots de passe ne correspondent pas.</p>
+                <button onclick="this.parentElement.remove()"><i class="ri-close-line"></i></button>
               </div>';
               break;
             case 'username_invalid':
               echo '<div class="form-alert form-error">
                 <i class="ri-error-warning-line"></i>
                 <p>Le nom d\'utilisateur peut contenir de 1 à 30 caractères alphanumériques, ainsi que "." et "_".</p>
+                <button onclick="this.parentElement.remove()"><i class="ri-close-line"></i></button>
               </div>';
               break;
             case 'email_invalid':
               echo '<div class="form-alert form-error">
                 <i class="ri-error-warning-line"></i>
                 <p>L\'adresse email doit contenir votre prénom et votre nom séparé par un point, et cela doit être une adresse de l\'IUT de Tarbes. (prenom.nom@iut-tarbes.fr)</p>
+                <button onclick="this.parentElement.remove()"><i class="ri-close-line"></i></button>
               </div>';
               break;
             case 'password_invalid':
               echo '<div class="form-alert form-error">
                 <i class="ri-error-warning-line"></i>
                 <p>Votre mot de passe doit contenir de 8 à 30 caractères, au minimun 1 lettre majuscule, 1 lettre minuscule, 1 chiffre et 1 caractère spécial (@,?;.:-_!+=).</p>
+                <button onclick="this.parentElement.remove()"><i class="ri-close-line"></i></button>
               </div>';
               break;
             case 'username_exist':
               echo '<div class="form-alert form-error">
                 <i class="ri-error-warning-line"></i>
-                <p>Le nom d\'utilisateur que vous avez choisi est déjà pris. Choisissez en un autre ou <a href="/src/account/login.php">connectez-vous</a> si c\'est le votre.</p>
+                <p>Le nom d\'utilisateur que vous avez choisi est déjà pris. Choisissez en un autre ou <a href="/account/login">connectez-vous</a> si c\'est le votre.</p>
+                <button onclick="this.parentElement.remove()"><i class="ri-close-line"></i></button>
               </div>';
               break;
             case 'email_exist':
               echo '<div class="form-alert form-error">
                 <i class="ri-error-warning-line"></i>
-                <p>L\'adresse email que vous avez choisi est déjà utilisée. Choisissez en une autre ou <a href="/src/account/login.php">connectez-vous</a> si c\'est la votre.</p>
+                <p>L\'adresse email que vous avez choisi est déjà utilisée. Choisissez en une autre ou <a href="/account/login">connectez-vous</a> si c\'est la votre.</p>
+                <button onclick="this.parentElement.remove()"><i class="ri-close-line"></i></button>
               </div>';
               break;
             default:
@@ -138,8 +150,11 @@
             <label for="promo">Promo*</label>
             <select name="promo" id="promo" class="special-input" required>
               <option value="">Choisis ta promo</option>
-              <option value="2021-2024">2021 - 2024</option>
-              <option value="2022-2025">2022 - 2025</option>
+              <?php
+              foreach($db->query('SELECT * FROM promo') as $promo){
+                echo '<option value="'.$promo['flat_name'].'">'.$promo['name'].'</option>';
+              }
+              ?>
             </select>
           </div>
         </div>
@@ -164,10 +179,10 @@
             <label for="profile-picture">Photo de profil</label>
             <div class="special-input">
               <span><i class="ri-file-upload-line"></i></span>
-              <label class="file-label" for="profile-picture">Choisis un fichier</label>
-              <input type="file" name="profile-picture" id="profile-picture" accept="image/png, image/jpeg"/>
+              <label class="file-label" id="profile-label" for="profile-picture">Choisis un fichier</label>
+              <input type="file" name="profile-picture" id="profile-picture" accept="image/png, image/jpeg" onchange="avatarSignupInput(this, 'profile-label');"/>
             </div>
-            <small>Taille recommandé : 256x256 pixels. Max.: 3Mo.Seulement .png et .jpg.</small>
+            <small>Taille recommandé : 256x256 pixels. Max.: 5Mo.Seulement .png et .jpg.</small>
           </div>
         </div>
         <div class="input-container">
@@ -203,10 +218,11 @@
         <div class="link-line">
           <p>
             Tu as déjà un compte ?
-            <a href="/src/account/login.php" class="gradient-text">Se connecter.</a>
+            <a href="/account/login" class="gradient-text">Se connecter.</a>
           </p> 
         </div>
       </form>
     </main>
+    <script src="/src/js/inputFilePreview.js"></script>
   </body>
 </html>

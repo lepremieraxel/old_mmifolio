@@ -1,3 +1,8 @@
+<?php
+  if(!isset($_GET['t']) && empty($_GET['t'])){
+    header('Location:/');
+  }
+?>
 <!DOCTYPE html>
 <html lang="fr">
   <head>
@@ -20,8 +25,54 @@
       <a href="/"><h1 class="logo">mmi<span>folio</span></h1></a>
     </header>
     <main>
+    <?php 
+        if(isset($_GET['e']) && !empty($_GET['e'])){
+          $err = htmlspecialchars($_GET['e']);
+          switch($err){
+            case 'passwd':
+              echo '<div class="form-alert form-error">
+                <i class="ri-error-warning-line"></i>
+                <p>Veuillez indiquer un mot de passe.</p>
+                <button onclick="this.parentElement.remove()"><i class="ri-close-line"></i></button>
+              </div>';
+              break;
+            case 'repasswd':
+              echo '<div class="form-alert form-error">
+                <i class="ri-error-warning-line"></i>
+                <p>Veuillez confirmer le mot de passe.</p>
+                <button onclick="this.parentElement.remove()"><i class="ri-close-line"></i></button>
+              </div>';
+              break;
+            case 'passwd_diff':
+              echo '<div class="form-alert form-error">
+                <i class="ri-error-warning-line"></i>
+                <p>Les mots de passe ne correspondent pas.</p>
+                <button onclick="this.parentElement.remove()"><i class="ri-close-line"></i></button>
+              </div>';
+              break;
+            case 'passwd_invalid':
+              echo '<div class="form-alert form-error">
+                <i class="ri-error-warning-line"></i>
+                <p>Le mot de passe n\'est pas valide.</p>
+                <button onclick="this.parentElement.remove()"><i class="ri-close-line"></i></button>
+              </div>';
+              break;
+            case 'server_err':
+              echo '<div class="form-alert form-error">
+                <i class="ri-error-warning-line"></i>
+                <p>Une erreur est survenue. Si le problème persiste, veuillez contacter un <a href="mailto:hello@axelmarcial.com">administrateur</a>.</p>
+                <button onclick="this.parentElement.remove()"><i class="ri-close-line"></i></button>
+              </div>';
+              break;
+            default:
+              echo '';
+              break;
+          }
+        }
+      ?>
       <h2>Réinitialiser le mot de passe</h2>
-      <form action="" id="reset">
+      <form action="/src/php/reset_form.php" method="post" id="reset">
+        <input type="hidden" name="token" value="<?php echo $_GET['t']?>">
         <div class="input-line">
           <div class="input-container">
             <label for="passwd">Mot de passe*</label>
@@ -35,8 +86,8 @@
         </div>
         <button class="form-btn">Changer</button>
         <div class="link-line">
-          <p>Tu n'es pas encore membre ? <a href="/src/account/signup.php" class="gradient-text">S'inscrire</a></p>
-          <a href="/src/account/login.php" class="gradient-text">Se connecter.</a>
+          <p>Tu n'es pas encore membre ? <a href="/account/signup" class="gradient-text">S'inscrire</a></p>
+          <a href="/account/login" class="gradient-text">Se connecter.</a>
         </div>
       </form>
     </main>

@@ -9,7 +9,7 @@
     $user_data = $check->fetch();
     $count = $check->rowCount();
     if($count <= 0){
-      header('Location:/src/account/login.php'); die();
+      header('Location:/account/login'); die();
     }
     if($_SESSION['user'] !== $_GET['token']){
       header('Location:'.$_SESSION['last_page'].''); die();
@@ -34,14 +34,109 @@
     <title>paramètres — mmifolio</title>
   </head>
   <body>
-  <?php include_once('../includes/header.php')?>
+  <?php include_once('../includes/header_include.php')?>
     <main id="setting">
       <h2>Paramètres</h2>
+      <?php
+      if(isset($_GET['e']) && !empty($_GET['e'])){
+        $err = htmlspecialchars($_GET['e']);
+        switch($err){
+          case 'server_err':
+            echo '<div class="form-alert form-error">
+              <i class="ri-error-warning-line"></i>
+              <p>Une erreur s\'est produite. Veuillez réessayer. Si le problème persiste, <a href="mailto:heloo@axelmarcial.com">contactez un administrateur</a>.</p>
+              <button onclick="this.parentElement.remove()"><i class="ri-close-line"></i></button>
+            </div>';
+            break;
+          case 'email_invalid':
+            echo '<div class="form-alert form-error">
+              <i class="ri-error-warning-line"></i>
+              <p>Votre email n\'est pas valide.</p>
+              <button onclick="this.parentElement.remove()"><i class="ri-close-line"></i></button>
+            </div>';
+            break;
+          case 'username_invalid':
+            echo '<div class="form-alert form-error">
+              <i class="ri-error-warning-line"></i>
+              <p>Votre nom d\'utilisateur n\'est pas valide.</p>
+              <button onclick="this.parentElement.remove()"><i class="ri-close-line"></i></button>
+            </div>';
+            break;
+          case 'email':
+            echo '<div class="form-alert form-error">
+              <i class="ri-error-warning-line"></i>
+              <p>Veuillez indiquer un email.</p>
+              <button onclick="this.parentElement.remove()"><i class="ri-close-line"></i></button>
+            </div>';
+            break;
+          case 'username':
+            echo '<div class="form-alert form-error">
+              <i class="ri-error-warning-line"></i>
+              <p>Veuillez indiquer un nom d\'utilisateur.</p>
+              <button onclick="this.parentElement.remove()"><i class="ri-close-line"></i></button>
+            </div>';
+            break;
+          case 'fullname':
+            echo '<div class="form-alert form-error">
+              <i class="ri-error-warning-line"></i>
+              <p>Veuillez indiquer un nom d\'affichage.</p>
+              <button onclick="this.parentElement.remove()"><i class="ri-close-line"></i></button>
+            </div>';
+            break;
+          case 'oldpasswd_invalid':
+            echo '<div class="form-alert form-error">
+              <i class="ri-error-warning-line"></i>
+              <p>Votre ancien mot de passe ne correspond pas.</p>
+              <button onclick="this.parentElement.remove()"><i class="ri-close-line"></i></button>
+            </div>';
+            break;
+          case 'newpasswd_invalid':
+            echo '<div class="form-alert form-error">
+              <i class="ri-error-warning-line"></i>
+              <p>Votre nouveau mot de passe n\'est pas valide.</p>
+              <button onclick="this.parentElement.remove()"><i class="ri-close-line"></i></button>
+            </div>';
+            break;
+          case 'passwd_diff':
+            echo '<div class="form-alert form-error">
+              <i class="ri-error-warning-line"></i>
+              <p>Vos nouveaux mots de passe ne correspondent pas.</p>
+              <button onclick="this.parentElement.remove()"><i class="ri-close-line"></i></button>
+            </div>';
+            break;
+          case 'renewpasswd':
+            echo '<div class="form-alert form-error">
+              <i class="ri-error-warning-line"></i>
+              <p>Veuillez confirmer votre nouveau mot de passe.</p>
+              <button onclick="this.parentElement.remove()"><i class="ri-close-line"></i></button>
+            </div>';
+            break;
+          case 'newpasswd':
+            echo '<div class="form-alert form-error">
+              <i class="ri-error-warning-line"></i>
+              <p>Veuillez indiquer un nouveau mot de passe.</p>
+              <button onclick="this.parentElement.remove()"><i class="ri-close-line"></i></button>
+            </div>';
+            break;
+          case 'oldpasswd':
+            echo '<div class="form-alert form-error">
+              <i class="ri-error-warning-line"></i>
+              <p>Veuillez indiquer votre mot de passe.</p>
+              <button onclick="this.parentElement.remove()"><i class="ri-close-line"></i></button>
+            </div>';
+            break;
+          default:
+            echo '';
+            break;
+        }
+      }
+      ?>
       <div class="tab-bar">
         <p data-tab="general" class="active" onclick="changeTab(this)">Général</p>
         <p data-tab="profil" onclick="changeTab(this)">Modifier le profil</p>
         <p data-tab="password" onclick="changeTab(this)">Mot de passe</p>
         <p data-tab="data" onclick="changeTab(this)">Données</p>
+        <a href="/unlog/">Se déconnecter</a>
       </div>
       <div class="setting-container" id="setting-general">
         <form action="/src/php/settings_form.php" method="post">
@@ -77,7 +172,7 @@
       <div class="setting-container" id="setting-profil" style="display: none;">
         <form action="/src/php/settings_form.php" method="post" id="delete-profil-photo">
         <?php echo '<input type="hidden" name="delete_photo_user_token" value="'.$_SESSION['user'].'">
-        <input type="hidden" name="delete_photo_redirect" value="user='.$_GET['user'].'&token='.$_SESSION['user'].'">';?>
+        <input type="hidden" name="delete_photo_redirect" value="'.$_GET['user'].'-'.$_SESSION['user'].'">';?>
         </form>
         <form action="/src/php/settings_form.php" method="post" enctype="multipart/form-data">
           <div class="input-file">
@@ -142,7 +237,7 @@
               <input type="text" name="behance" id="behance" placeholder="nomdutilisateur" value="<?php echo $user_data['behance'];?>">
             </div>
           </div>
-          <?php echo '<input type="hidden" name="profil_redirect" value="user='.$_GET['user'].'&token='.$_SESSION['user'].'"><input type="hidden" name="profil_user_token" value="'.$_SESSION['user'].'">';?>
+          <?php echo '<input type="hidden" name="profil_redirect" value="'.$_GET['user'].'-'.$_SESSION['user'].'"><input type="hidden" name="profil_user_token" value="'.$_SESSION['user'].'">';?>
           <button class="cta gradient-cta" name="profil-form"><a>Sauvegarder&nbsp;<i class="ri-save-3-line"></i></a></button>
         </form>
       </div>
@@ -171,7 +266,7 @@
             </div>
           </div>
           <?php echo'<input type="hidden" name="password_user_token" value="'.$_SESSION['user'].'">
-          <input type="hidden" name="password_redirect" value="user='.$_GET['user'].'&token='.$_SESSION['user'].'">';?>
+          <input type="hidden" name="password_redirect" value="'.$_GET['user'].'-'.$_SESSION['user'].'">';?>
           <button class="cta gradient-cta" name="password-form"><a>Sauvegarder&nbsp;<i class="ri-save-3-line"></i></a></button>
         </form>
       </div>
@@ -186,7 +281,7 @@
             <button class="cta" onclick="closeModal(this);"><a>Annuler&nbsp;<i class="ri-close-line"></i></a></button>
             <form action="/src/php/settings_form.php" method="post" class="modal-form">
               <input type="hidden" name="data_creations">
-              <?php echo '<input type="hidden" name="data_creations_redirect" value="user='.$_GET['user'].'&token='.$_SESSION['user'].'"><input type="hidden" name="data_creations_user_token" value="'.$_SESSION['user'].'">';?>
+              <?php echo '<input type="hidden" name="data_creations_redirect" value="'.$_GET['user'].'-'.$_SESSION['user'].'"><input type="hidden" name="data_creations_user_token" value="'.$_SESSION['user'].'">';?>
               <button class="delete-btn">Supprimer&nbsp;<i class="ri-delete-bin-line"></i></button>
             </form>
           </div>
@@ -202,7 +297,7 @@
             <button class="cta" onclick="closeModal(this);"><a>Annuler&nbsp;<i class="ri-close-line"></i></a></button>
             <form action="/src/php/settings_form.php" method="post" class="modal-form">
               <input type="hidden" name="data_likes">
-              <?php echo '<input type="hidden" name="data_likes_redirect" value="user='.$_GET['user'].'&token='.$_SESSION['user'].'"><input type="hidden" name="data_likes_user_token" value="'.$_SESSION['user'].'">';?>
+              <?php echo '<input type="hidden" name="data_likes_redirect" value="'.$_GET['user'].'-'.$_SESSION['user'].'"><input type="hidden" name="data_likes_user_token" value="'.$_SESSION['user'].'">';?>
               <button class="delete-btn">Supprimer&nbsp;<i class="ri-delete-bin-line"></i></button>
             </form>
           </div>
@@ -218,7 +313,7 @@
             <button class="cta" onclick="closeModal(this);"><a>Annuler&nbsp;<i class="ri-close-line"></i></a></button>
             <form action="/src/php/settings_form.php" method="post" class="modal-form">
               <input type="hidden" name="data_account">
-              <?php echo '<input type="hidden" name="data_account_redirect" value="user='.$_GET['user'].'&token='.$_SESSION['user'].'"><input type="hidden" name="data_account_user_token" value="'.$_SESSION['user'].'">';?>
+              <?php echo '<input type="hidden" name="data_account_redirect" value="'.$_GET['user'].'-'.$_SESSION['user'].'"><input type="hidden" name="data_account_user_token" value="'.$_SESSION['user'].'">';?>
               <button class="delete-btn">Supprimer&nbsp;<i class="ri-delete-bin-line"></i></button>
             </form>
           </div>

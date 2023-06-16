@@ -4,6 +4,7 @@
   padding: 0;
   margin: 0;
   /* border: 1px solid red; */
+  scroll-behavior: smooth;
 }
 
 :root{
@@ -14,7 +15,9 @@
   --white-bg: #fff;
   --black-text: #000;
   --red-warning: #AE1B1B;
-  --red-warning-opacity: #ae1b1bb3;
+  --red-warning-opacity: #ae1b1bc8;
+  --green-success: #1dae1b;
+  --green-success-opacity: #1dae1bb3;
   --padding-header: 2vh 6vw;
   --padding-article: 10vh 6vw 0;
   --padding-footer: 6vh 6vw 8vh;
@@ -41,11 +44,13 @@ body{
 }
 
 header{
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: var(--padding-header);
   background: var(--white-bg);
+  z-index: 1000;
 }
 header a{
   text-decoration: none;
@@ -112,6 +117,9 @@ header .burger{
   transition: translate .3s ease-out;
   will-change: transform;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .cta a{
   color: var(--white-bg);
@@ -151,6 +159,7 @@ header .burger{
   align-items: center;
   justify-content: center;
   gap: 5em;
+  padding: 3em 0;
 }
 #hero::before{
   content: "";
@@ -312,10 +321,16 @@ header .burger{
 }
 .overlay-like{
   display: flex;
+  justify-content: end;
+  align-items: center;
+  width: 25%; 
+}
+.overlay-like .like-form{
+  display: flex;
   gap: .3em;
   justify-content: end;
   align-items: center;
-  width: 25%;
+  width: 100%;
   color: white;
 }
 .overlay-like button{
@@ -329,7 +344,39 @@ header .burger{
   stroke: white;
   stroke-width: 2px;
 }
+.overlay-like .liked svg{
+  fill: #AE1B1B;
+  stroke: none;
+}
 
+.gototop{
+  position: fixed;
+  bottom: 70px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1em;
+  color: var(--black-text);
+  transition: opacity .3s ease;
+  cursor: pointer;
+  opacity: 0;
+}
+.gototop i {
+  font-size: 2em;
+}
+.gototop p{
+  font-size: 1.1em;
+  writing-mode: vertical-lr;
+  font-weight: var(--semibold-wgt);
+}
+.gototop:hover{
+  background: var(--primary-gradient);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+}
 footer{
   display: flex;
   flex-direction: column;
@@ -453,6 +500,9 @@ body.account{
   gap: 2em;
   width: 45%;
 }
+.account main p a{
+  color: var(--black-text);
+}
 form#signup, form#reset{
   width: 60%;
 }
@@ -483,7 +533,9 @@ form#signup, form#reset{
   border-radius: 15px;
 }
 .input-container textarea{
-  resize: vertical;
+  resize: none;
+  min-height: 7em;
+  overflow-y: hidden;
 }
 .input-container select{
   cursor: pointer;
@@ -626,12 +678,23 @@ main#add .file-preview-grid img, main#add .file-preview-grid video{
   object-fit: cover;
   border-radius: 10px;
 }
-main#page, main#update form{
+main#page, main#update form, main#contact form{
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 2em;
   padding: 3vh 20vw;
+}
+main#page .project-link{
+  text-decoration: none;
+  color: var(--black-text);
+  font-size: 1.2em;
+  font-weight: var(--medium-wgt);
+  width: fit-content !important;
+  align-self: flex-start;
+}
+main#page .project-link:hover{
+  opacity: .8;
 }
 main#page>:nth-child(n), main#update form>:nth-child(n){
   width: 100%;
@@ -680,17 +743,26 @@ main#page .user img, main#update .user img{
 main#page .user p:hover, main#update .user p:hover{
   opacity: .8;
 }
-main#page .like{
+main#page .like form{
   display: flex;
-  align-items: center;
-  gap: .5em;
+  align-items: end;
+  gap: .2em;
   font-size: 1.3em;
 }
 main#page .like button{
-  background: none;
+  background: transparent;
   border: none;
-  font-size: 1.3em;
   cursor: pointer;
+}
+main#page .like button svg{
+  width: 1.6em;
+  fill: none;
+  stroke: black;
+  stroke-width: 2px;
+}
+main#page .like .liked svg{
+  fill: #AE1B1B;
+  stroke: none;
 }
 main#page .creation-infos{
   display: flex;
@@ -790,6 +862,12 @@ main#profil .user-name .fullname{
 main#profil .user-name .username{
   font-size: 2em;
 }
+main#profil .user-btn{
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  gap: 1em;
+}
 main#profil .user-bio-title{
   font-size: 1.1em;
   font-weight: var(--bold-wgt);
@@ -797,6 +875,20 @@ main#profil .user-bio-title{
 main#profil .user-bio-text{
   padding: .5em;
   width: 60%;
+}
+main#profil .user-social{
+  display: flex;
+  align-items: center;
+  width: 100%;
+  flex-wrap: wrap;
+  gap: 1em;
+}
+main#profil .user-social a{
+  text-decoration: none;
+  color: var(--black-text);
+}
+main#profil .user-social a:hover{
+  opacity: .8;
 }
 .grid-item.add{
   display: flex;
@@ -849,6 +941,7 @@ main#profil .grid-profil{
 .form-alert{
   display: flex;
   align-items: center;
+  justify-content: space-between;
   width: 100%;
   gap: 1em;
   max-width: 700px;
@@ -862,9 +955,21 @@ main#profil .grid-profil{
 }
 .form-alert p{
   font-size: 1.2em;
+  width: 100%;
 }
 .form-alert a{
   color: var(--black-text);
+}
+.form-alert button{
+  background: none;
+  border: none;
+  cursor: pointer;
+  align-self: start;
+  justify-self: flex-end;
+}
+.form-alert button i{
+  background: none;
+  padding: .5em .1em;
 }
 .form-error{
   border-color: var(--red-warning);
@@ -873,6 +978,20 @@ main#profil .grid-profil{
 .form-error i{
   background: var(--red-warning);
 }
+.form-success{
+  border-color: var(--green-success);
+  background: var(--green-success-opacity);
+}
+.form-success i{
+  background: var(--green-success);
+}
+.form-modal{
+  z-index: 10000;
+  position: absolute;
+  top: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+}
 main#setting{
   display: flex;
   flex-direction: column;
@@ -880,7 +999,7 @@ main#setting{
   gap: 4em;
   width: 100%;
 }
-main#setting h2{
+main#setting h2, main#contact h2{
   font-size: 4em;
   text-align: center;
   width: 100%;
@@ -892,7 +1011,9 @@ main#setting .tab-bar{
   gap: 2em;
   flex-wrap: wrap;
 }
-main#setting .tab-bar p{
+main#setting .tab-bar p, main#setting .tab-bar a{
+  text-decoration: none;
+  color: var(--black-text);
   font-size: 1.2em;
   font-weight: var(--semibold-wgt);
   position: relative;
@@ -910,6 +1031,9 @@ main#setting .tab-bar p.active::before{
   height: 3px;
   border-radius: 99px;
   background: var(--black-text);
+}
+main#setting .tab-bar a{
+  color: var(--red-warning);
 }
 main#setting .setting-container{
   width: 100%;
@@ -1054,6 +1178,7 @@ main#setting .delete-data-text span{
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 0 !important;
 }
 .setting-data-modal form .delete-btn{
   background: none;
@@ -1124,4 +1249,80 @@ main#update .btn-line{
   align-items: center;
   justify-content: center;
   gap: 2em;
+}
+main#update .input-group{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .5em;
+  width: 100%;
+}
+main#update .checkbox{
+  font-size: 1em;
+  font-weight: var(--regular-wgt);
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+main#update .checkbox input{
+  width: fit-content;
+}
+#otp{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1em;
+  width: 100%;
+}
+#otp p{
+  font-size: 2em;
+}
+#otp input{
+  aspect-ratio: 1;
+  max-width: fit-content;
+  width: 3em;
+  text-align: center;
+}
+main#admin h2{
+  font-size: 4em;
+  text-align: center;
+}
+main#admin .line-table{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 3em;
+  width: 100%;
+  padding: 3vh 20vw;
+}
+main#admin .table{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1em;
+}
+main#admin .table h3{
+  font-size: 2em;
+}
+main#admin td, main#admin th, main#admin table{
+  border: 1px solid var(--black-text);
+  border-collapse: collapse;
+}
+main#admin td, main#admin th{
+  padding: .5em 1em;
+  text-align: center;
+}
+main#admin .table .add-admin{
+  width: 100%;
+  display: flex;
+  gap: 1em;
+}
+main#admin .add-admin input{
+  width: 100%;
+  font-size: 1em;
+  padding: .5em;
+}
+main#admin .add-admin button{
+  width: 20%;
+  font-size: 1.2em;
 }

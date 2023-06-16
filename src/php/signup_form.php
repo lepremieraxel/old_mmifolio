@@ -23,23 +23,25 @@ if(isset($_POST['fullname']) && !empty($_POST['fullname']) && $_POST['fullname']
                   $email = htmlspecialchars(strtolower($_POST['email']));
                   $passwd = htmlspecialchars($_POST['passwd']);
                   $repasswd = htmlspecialchars($_POST['repasswd']);
-
+                  
                   $avatar = "";
                   $avatar_type = "";
                   $cost = ['cost' => 12];
-                  $token = bin2hex(openssl_random_pseudo_bytes(64));
+                  $token = bin2hex(openssl_random_pseudo_bytes(5));
+                  $verif_code = strtoupper(bin2hex(openssl_random_pseudo_bytes(3)));
+                  $is_verif = 0;
                   
                   $selectE = $db->prepare('SELECT * FROM users WHERE email = ?');
                   $selectE->execute(array($email));
                   $countE = $selectE->rowCount();
                   if($countE > 0){
-                    header('Location:/src/account/signup.php?e=email_exist'); die();
+                    header('Location:/account/signup/email_exist'); die();
                   }
                   $selectU = $db->prepare('SELECT * FROM users WHERE username = ?');
                   $selectU->execute(array($username));
                   $countU = $selectU->rowCount();
                   if($countU > 0){
-                    header('Location:/src/account/signup.php?e=username_exist'); die();
+                    header('Location:/account/signup/username_exist'); die();
                   }
                   
                   if(isset($_FILES['profile-picture']) && $_FILES['profile-picture']['error'] == 0 && $_FILES['profile-picture']['size'] > 0 && $_FILES['profile-picture']['size'] <= 5000000){
@@ -48,9 +50,11 @@ if(isset($_POST['fullname']) && !empty($_POST['fullname']) && $_POST['fullname']
                     $avatar_type = mime_content_type($file);
                   }
                   
-                  $insert = $db->prepare('INSERT INTO users (token, email, fullname, username, password, promo, avatar, avatar_type) VALUES(:token, :email, :fullname, :username, :password, :promo, :avatar, :avatar_type)');
+                  $insert = $db->prepare('INSERT INTO users (token, verif_code, is_verif, email, fullname, username, password, promo, avatar, avatar_type) VALUES(:token, :verif_code, :is_verif, :email, :fullname, :username, :password, :promo, :avatar, :avatar_type)');
                   $insert->execute(array(
                     'token' => $token,
+                    'verif_code' => $verif_code,
+                    'is_verif' => $is_verif,
                     'email' => $email,
                     'fullname' => $fullname,
                     'username' => $username,
@@ -60,18 +64,20 @@ if(isset($_POST['fullname']) && !empty($_POST['fullname']) && $_POST['fullname']
                     'avatar_type' => $avatar_type
                   ));
                   if($insert){
-                    session_start();
-                    $_SESSION['user'] = $token;
-                    $_SESSION['connected'] = true;
-                    header('Location:/'); die();
-                  } else header('Location:/src/account/signup.php?e=server_err'); die();
+                    $myemail = 'hello@axelmarcial.com';
+                    $subject = "Code de vérification - mmifolio";
+                    $body = "Votre code de vérification : $verif_code";
+                    $headers = "From: $myemail\n";
+                    mail($email, $subject, $body, $headers);
+                    header('Location:/account/verification?token='.$token.''); die();
+                  } else header('Location:/account/signup/server_err'); die();
 
-                } else header('Location:/src/account/signup.php?e=password_invalid'); die();
-              } else header('Location:/src/account/signup.php?e=email_invalid'); die();
-            } else header('Location:/src/account/signup.php?e=username_invalid'); die();
-          } else header('Location:/src/account/signup.php?e=password_diff'); die();
-        } else header('Location:/src/account/signup.php?e=password'); die();
-      } else header('Location:/src/account/signup.php?e=email'); die();
-    } else header('Location:/src/account/signup.php?e=username'); die();
-  } else header('Location:/src/account/signup.php?e=promo'); die();
-} else header('Location:/src/account/signup.php?e=fullname'); die();
+                } else header('Location:/account/signup/password_invalid'); die();
+              } else header('Location:/account/signup/email_invalid'); die();
+            } else header('Location:/account/signup/username_invalid'); die();
+          } else header('Location:/account/signup/password_diff'); die();
+        } else header('Location:/account/signup/password'); die();
+      } else header('Location:/account/signup/email'); die();
+    } else header('Location:/account/signup/username'); die();
+  } else header('Location:/account/signup/promo'); die();
+} else header('Location:/account/signup/fullname'); die();

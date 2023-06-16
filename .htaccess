@@ -1,0 +1,27 @@
+Options +FollowSymlinks
+RewriteEngine on
+
+RewriteRule ^account/([^/]+)$ src/account/$1.php [L]
+RewriteRule ^account/([^/]+)/([^/]+)$ src/account/$1.php?e=$2 [L]
+RewriteRule ^account/reset-password/([^/]+)$ src/account/reset-password.php?t=$1 [L]
+RewriteRule ^account/reset-password/([^/]+)/([^/]+)$ src/account/reset-password.php?t=$1&e=$2 [L]
+
+RewriteRule ^pages/([^/]+)$ src/pages/$1.php [L]
+RewriteRule ^pages/categories/([^/]+)$ src/pages/category-details.php?cat=$1 [L]
+RewriteRule ^pages/archives/([^/]+)$ src/pages/archive-details.php?year=$1 [L]
+
+RewriteRule ^contact/([^/]+)$ src/pages/contact.php?r=$1 [L]
+RewriteRule ^contact/([^/]+)$ src/pages/contact.php?e=$1 [L]
+  
+RewriteRule ^add/$ src/new/ajouter.php [L]
+RewriteRule ^add/([^/]+)$ src/new/ajouter.php?e=$1 [L]
+
+RewriteRule ^profil/([^/]+)-([^/]+)$ src/profil/profil.php?user=$1&token=$2 [L]
+
+RewriteRule ^settings/([^/]+)-([^/]+)$ src/profil/settings.php?user=$1&token=$2 [L]
+
+RewriteRule ^unlog/$ src/config/unlog.php [L]
+
+RewriteRule ^creations/([^/]+)-([^/]+)$ src/pages/page.php?title=$1&token_creation=$2 [L]
+
+RewriteRule ^update/([^/]+)-([^/]+)-([^/]+)$ src/new/modifier.php?title=$1&token_creation=$2&token_user=$3 [L]

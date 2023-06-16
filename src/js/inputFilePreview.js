@@ -40,6 +40,7 @@ function apercuInput(el, div, label, input){
           video.autoplay = true;
           video.loop = true;
           video.muted = true;
+          video.playsInline = true;
           video.title = file.name;
           previewDiv.appendChild(video)
           labelEl.innerText = file.name;
@@ -84,6 +85,7 @@ function galeryInput(el, div, label){
             video.autoplay = true;
             video.loop = true;
             video.muted = true;
+            video.playsInline = true;
             video.title = file.name;
             previewDiv.appendChild(video)
           }
@@ -96,4 +98,16 @@ function galeryInput(el, div, label){
       return;
     }
   } else alert('Vous ne pouvez sélectionner que 5 fichiers.');
+}
+
+function avatarSignupInput(el, label){
+  const labelEl = document.querySelector(`#${label}`);
+  const [picture] = el.files;
+  if(picture){
+    const reader = new FileReader();
+    reader.onload = function () {
+      labelEl.innerText = picture.name;
+    }
+    reader.readAsDataURL(picture);
+  }
 }

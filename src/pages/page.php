@@ -16,9 +16,32 @@
     <title>page — mmifolio</title>
   </head>
   <body>
-  <?php include_once('../includes/header.php')?>
+  <?php include_once('../includes/header_include.php')?>
     <main id="page">
-      <?php include('../php/displayPage.php'); displayPage(); $_SESSION['last_page'] = $_SERVER['REQUEST_URI'];?>
+      <?php 
+      if(isset($_GET['e']) && !empty($_GET['e'])){
+        $err = htmlspecialchars($_GET['e']);
+        switch($err){
+          case 'add':
+            echo '<div class="form-alert form-success">
+              <i class="ri-error-warning-line"></i>
+              <p>Votre création a bien été ajouté.</p>
+              <button onclick="this.parentElement.remove()"><i class="ri-close-line"></i></button>
+            </div>';
+            break;
+          case 'update':
+            echo '<div class="form-alert form-success">
+              <i class="ri-error-warning-line"></i>
+              <p>Votre création a bien été mise à jour.</p>
+              <button onclick="this.parentElement.remove()"><i class="ri-close-line"></i></button>
+            </div>';
+            break;
+          default:
+            echo '';
+            break;
+        }
+      }
+      include('../php/displayPage.php'); displayPage();?>
     </main>
     <?php include_once('../includes/footer.php');?>
     <script src="/src/js/galerySelector.js"></script>

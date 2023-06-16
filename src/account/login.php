@@ -44,24 +44,35 @@
               echo '<div class="form-alert form-error">
                 <i class="ri-error-warning-line"></i>
                 <p>Veuillez indiquer un nom d\'utilisateur ou une adresse email.</p>
+                <button onclick="this.parentElement.remove()"><i class="ri-close-line"></i></button>
               </div>';
               break;
             case 'passwd':
               echo '<div class="form-alert form-error">
                 <i class="ri-error-warning-line"></i>
                 <p>Veuillez indiquer un mot de passe.</p>
+                <button onclick="this.parentElement.remove()"><i class="ri-close-line"></i></button>
               </div>';
               break;
             case 'login_inexist':
               echo '<div class="form-alert form-error">
                 <i class="ri-error-warning-line"></i>
-                <p>Ce nom d\'utilisateur ou cette adresse email n\'est pas associé à un compte existant. <a href="/src/account/signup.php">Inscrivez-vous</a></p>
+                <p>Ce nom d\'utilisateur ou cette adresse email n\'est pas associé à un compte existant. <a href="/account/signup">Inscrivez-vous</a></p>
+                <button onclick="this.parentElement.remove()"><i class="ri-close-line"></i></button>
               </div>';
               break;
             case 'passwd_incorrect':
               echo '<div class="form-alert form-error">
                 <i class="ri-error-warning-line"></i>
-                <p>Le mot de passe est incorrect. Si vous l\'avez oublié, n\'hésitez pas à le <a href="/src/account/forgot-password.php">réinitialiser</a>.</p>
+                <p>Le mot de passe est incorrect. Si vous l\'avez oublié, n\'hésitez pas à le <a href="/account/forgot-password">réinitialiser</a>.</p>
+                <button onclick="this.parentElement.remove()"><i class="ri-close-line"></i></button>
+              </div>';
+              break;
+            case 'passwd_update':
+              echo '<div class="form-alert form-success">
+                <i class="ri-error-warning-line"></i>
+                <p>Votre mot de passe a bien été mis à jour. Veuillez vous connecter.</p>
+                <button onclick="this.parentElement.remove()"><i class="ri-close-line"></i></button>
               </div>';
               break;
             default:
@@ -87,8 +98,8 @@
         </div>
         <button class="form-btn">Se connecter</button>
         <div class="link-line">
-          <p>Tu n'es pas encore membre ? <a href="/src/account/signup.php" class="gradient-text">S'inscrire</a></p>
-          <a href="/src/account/forgot-password.php">Mot de passe oublié ?</a>
+          <p>Tu n'es pas encore membre ? <a href="/account/signup" class="gradient-text">S'inscrire</a></p>
+          <a href="/account/forgot-password">Mot de passe oublié ?</a>
         </div>
       </form>
     </main>

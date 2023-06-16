@@ -17,9 +17,26 @@
   </head>
   <body>
     <?php 
-    include_once('src/includes/header.php');
+    include_once('src/includes/header_include.php');
     ?>
     <main>
+    <?php 
+        if(isset($_GET['e']) && !empty($_GET['e'])){
+          $err = htmlspecialchars($_GET['e']);
+          switch($err){
+            case 'verif':
+              echo '<div class="form-alert form-error form-modal">
+                <i class="ri-error-warning-line"></i>
+                <p>Vous devez avoir un compte vérifié pour ajouter et liker des créations. Vous pouvez vérifié votre compte dans vos paramètres.</p>
+                <button onclick="this.parentElement.remove()"><i class="ri-close-line"></i></button>
+              </div>';
+              break;
+            default:
+              echo '';
+              break;
+          }
+        }
+      ?>
       <article id="hero">
         <div class="hero-text">
           <h2>Explore les créations</h2>
@@ -31,7 +48,7 @@
           </p>
         </div>
         <button class="cta hero-add-btn">
-          <a href="/src/new/ajouter.php">Ajoute tes créations <i class="ri-add-box-line"></i></a>
+          <a href="/add/">Ajoute tes créations <i class="ri-add-box-line"></i></a>
         </button>
       </article>
       <article class="galery-container" id="most-recents">
@@ -42,7 +59,7 @@
           include('src/php/displayCreations.php');
           displayHome(8);?>
         </div>
-        <button class="cta"><a href="/src/pages/decouvrir.php">Découvrir <i class="ri-add-box-line"></i></a></button>
+        <button class="cta"><a href="/pages/decouvrir">Découvrir <i class="ri-add-box-line"></i></a></button>
       </article>
     </main>
     <?php include_once('src/includes/footer.php');?>

@@ -9,7 +9,10 @@
     $user_data = $check->fetch();
     $count = $check->rowCount();
     if($count <= 0){
-      header('Location:/src/account/login.php'); die();
+      header('Location:/account/login'); die();
+    }
+    if($user_data['is_verif'] == 0){
+      header('Location:/?e=verif'); die();
     }
   }
 ?>
@@ -31,9 +34,68 @@
     <title>ajouter une création — mmifolio</title>
   </head>
   <body>
-    <?php include_once('../includes/header.php')?>
+    <?php include_once('../includes/header_include.php')?>
     <main id="add">
       <h2 class="main-title">Ajouter une création</h2>
+      <?php 
+        if(isset($_GET['e']) && !empty($_GET['e'])){
+          $err = htmlspecialchars($_GET['e']);
+          switch($err){
+            case 'server_err':
+              echo '<div class="form-alert form-error">
+                <i class="ri-error-warning-line"></i>
+                <p>Une erreur s\'est produite. Veuillez réessayer. Si le problème persiste, <a href="mailto:hello@axelmarcial.com">contactez un administateur</a>.</p>
+                <button onclick="this.parentElement.remove()"><i class="ri-close-line"></i></button>
+              </div>';
+              break;
+            case 'galery':
+              echo '<div class="form-alert form-error">
+                <i class="ri-error-warning-line"></i>
+                <p>Veuillez sélectionner au minimum une image ou vidéo pour la galerie.</p>
+                <button onclick="this.parentElement.remove()"><i class="ri-close-line"></i></button>
+              </div>';
+              break;
+            case 'apercu':
+              echo '<div class="form-alert form-error">
+                <i class="ri-error-warning-line"></i>
+                <p>Veuillez sélectionner une image ou vidéo d\'apercu.</p>
+                <button onclick="this.parentElement.remove()"><i class="ri-close-line"></i></button>
+              </div>';
+              break;
+            case 'date':
+              echo '<div class="form-alert form-error">
+                <i class="ri-error-warning-line"></i>
+                <p>Veuillez indiquer une année.</p>
+                <button onclick="this.parentElement.remove()"><i class="ri-close-line"></i></button>
+              </div>';
+              break;
+            case 'description':
+              echo '<div class="form-alert form-error">
+                <i class="ri-error-warning-line"></i>
+                <p>Veuillez indiquer une description.</p>
+                <button onclick="this.parentElement.remove()"><i class="ri-close-line"></i></button>
+              </div>';
+              break;
+            case 'category':
+              echo '<div class="form-alert form-error">
+                <i class="ri-error-warning-line"></i>
+                <p>Veuillez choisir une catégorie.</p>
+                <button onclick="this.parentElement.remove()"><i class="ri-close-line"></i></button>
+              </div>';
+              break;
+            case 'title':
+              echo '<div class="form-alert form-error">
+                <i class="ri-error-warning-line"></i>
+                <p>Veuillez indiquer un titre.</p>
+                <button onclick="this.parentElement.remove()"><i class="ri-close-line"></i></button>
+              </div>';
+              break;
+            default:
+              echo '';
+              break;
+          }
+        }
+      ?>
       <form action="/src/php/ajouter_form.php" method="post" enctype="multipart/form-data">
         <div class="input-line">
           <div class="input-container">

@@ -16,7 +16,7 @@
     <title>découvrir — mmifolio</title>
   </head>
   <body>
-  <?php include_once('../includes/header.php')?>
+  <?php include_once('../includes/header_include.php')?>
     <main>
       <article class="galery-container" id="most-recents">
         <div class="galery-title">

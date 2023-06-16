@@ -16,7 +16,7 @@
     <title>archives — mmifolio</title>
   </head>
   <body>
-  <?php include_once('../includes/header.php')?>
+  <?php include_once('../includes/header_include.php')?>
     <main>
           <?php 
             $_SESSION['last_page'] = $_SERVER['REQUEST_URI'];
