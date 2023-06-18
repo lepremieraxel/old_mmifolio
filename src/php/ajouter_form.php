@@ -184,7 +184,7 @@ if(isset($_POST['title']) && !empty($_POST['title']) && strlen($_POST['title']) 
 
 
             if($insert && !in_array(false, $insert_err)){
-              header('Location:/creations/'.$title.'-'.$token.'&e=add'); die();
+              header('Location:/creations/'.str_replace(" ", "-", strtolower($title)).'-'.$token.'&e=add'); die();
             } else header('Location:/add/server_err'); die();
 
           } else header('Location:/add/galery'); die();

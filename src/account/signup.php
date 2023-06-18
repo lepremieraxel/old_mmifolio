@@ -204,7 +204,7 @@
               <span><i class="ri-lock-password-line"></i></span>
               <input type="password" name="passwd" id="passwd" required placeholder="•••••••••••••••" minlength="8" maxlength="30"/>
             </div>
-            <small>De 8 à 30 caractères. Minimum 1 minuscule, 1 majuscule, 1 chiffre et 1 symbole.</small>
+            <small>De 8 à 30 caractères. Minimum 1 minuscule, 1 majuscule, 1 chiffre et 1 symbole (@,?;.:-_!+=).</small>
           </div>
           <div class="input-container">
             <label for="repasswd">Confirmer*</label>

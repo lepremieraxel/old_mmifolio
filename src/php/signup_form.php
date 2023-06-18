@@ -3,8 +3,8 @@
 require_once('../config/config.php');
 
 $regExpUsername = "/^(?!\.|\d|_)[a-z0-9._]{1,30}$/";
-$regExpEmail = "/^[a-z]+\.[a-z]+@iut-tarbes\.fr$/";
-$regExpPasswd = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@,?;.:\-_\!+=])[a-zA-Z\d@,?;.:\!-_+=]{8,30}$/";
+$regExpEmail = "/^[a-z]+\.[a-z\-]+@iut-tarbes\.fr$/";
+$regExpPasswd = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@,?;.:\-_\!+=])[a-zA-Z\d@,?;.:\-_\!+=]{8,30}$/";
 
 if(isset($_POST['fullname']) && !empty($_POST['fullname']) && $_POST['fullname'] !== ' ' && strlen($_POST['fullname']) >= 3 && strlen($_POST['fullname']) <= 50){
   if(isset($_POST['promo']) && !empty($_POST['promo']) && $_POST['promo'] !== ' '){

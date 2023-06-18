@@ -1,4 +1,7 @@
 @media screen and (max-width: 1200px) {
+  .account header{
+    z-index: -1;
+  }
   header .logo{
     z-index: 1000;
   }
@@ -242,5 +245,8 @@
   }
   main#contact form{
     padding: 3vh 5vw;
+  }
+  #otp p{
+    display: none;
   }
 }
